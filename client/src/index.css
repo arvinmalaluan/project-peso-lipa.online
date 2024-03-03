@@ -6,4 +6,14 @@
 ::before,
 ::after {
   font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+}
+
+.custom-bt {
+  border-radius: 4px 4px 0 0;
+}
+
+.custom-bb {
+  border-radius: 0 0 4px 4px;
 }

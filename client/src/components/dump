@@ -1,0 +1,62 @@
+<p className="pb-2 text-2xl font-semibold border-b">
+              Getting Started
+            </p>
+
+            <div>
+              <p className="font-[500] mt-4">Overview</p>
+              <p className="text-sm text-gray-500">
+                The Manage Documents page is your centralized hub for organizing
+                essential application materials. It consolidates all pertinent
+                documents, including:
+              </p>
+              <ol className="flex flex-col gap-2 mt-4 list-decimal">
+                <li className="text-sm list-inside">
+                  <span className="text-sm font-[500]">Resume</span>
+                  <p className="pl-4 text-xs text-gray-500">
+                    Maintain various versions of your professional resumes to
+                    tailor your application for diverse job opportunities.
+                  </p>
+                </li>
+                <li className="text-sm list-inside">
+                  <span className="text-sm font-[500]">
+                    Official Transcript of Records
+                  </span>
+                  <p className="pl-4 text-xs text-gray-500">
+                    Ensure accessibility to your up-to-date National Bureau of
+                    Investigation (NBI) Clearance for background verification,
+                    fostering trust in your application.
+                  </p>
+                </li>
+                <li className="text-sm list-inside">
+                  <span className="text-sm font-[500]">
+                    PSA Birth Certificate
+                  </span>
+                  <p className="pl-4 text-xs text-gray-500">
+                    Keep your Philippine Statistics Authority (PSA) Birth
+                    Certificate on hand, providing official documentation of
+                    your birth details, a fundamental requirement in various
+                    processes.
+                  </p>
+                </li>
+                <li className="text-sm list-inside">
+                  <span className="text-sm font-[500]">NBI Clearance</span>
+                  <p className="pl-4 text-xs text-gray-500">
+                    Showcase your educational accomplishments by securely
+                    storing and presenting your Official Transcript of Records,
+                    a crucial document for academic and career pursuits.
+                  </p>
+                </li>
+              </ol>
+            </div>
+
+            <div>
+              <p className="font-[500] mt-4">Uploading Documents</p>
+              <p className="text-sm text-gray-500">
+                Upload your application documents effortlessly by selecting the
+                "Upload" button. Supported file types include PDF, DOC, and
+                DOCX. Ensure the authenticity of all documents, as any attempt
+                to submit forged or misleading information holds the applicant
+                liable for their actions. Maintain transparency for a fair and
+                trustworthy application process.
+              </p>
+            </div>
