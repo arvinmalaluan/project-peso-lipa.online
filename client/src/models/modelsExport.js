@@ -70,6 +70,72 @@ const sampleDataForGEduc = [
 const sampleDataForSpoken = ["Language: Tagalog", "Proficiency: Basic"];
 const sampleDataForHbbies = ["Hobbies and Interests: Reading"];
 
+const inputProps_achievements = [
+  { placeholder: "Reward title", name: "reward_name", type: "text" },
+  { placeholder: "Year received", name: "year_received", type: "text" },
+  { placeholder: "Issuer/Organization", name: "issuer", type: "text" },
+  {
+    placeholder: "Description (Optional)",
+    name: "reward_description",
+    type: "text",
+  },
+];
+const sampleDataForAchievements = [
+  "Reward title: Cum Laude",
+  "Year received: 2024",
+  "Issuer/Organization: Batangas State University",
+  "Description: n/a",
+];
+
+const inputProps_references = [
+  { placeholder: "Reference name", name: "reference_name", type: "text" },
+  {
+    placeholder: "Relationship to you",
+    name: "reference_relationship_to_you",
+    type: "text",
+  },
+  { placeholder: "Institution", name: "reference_institution", type: "text" },
+  {
+    placeholder: "Contact Information",
+    name: "reference_contact_info",
+    type: "text",
+  },
+];
+const sampleDataForReferences = [
+  "Reference name: Arvin Malaluan",
+  "Relationship to you: Colleague",
+  "Institution: Batangas State University",
+  "Contact Information: 09196383586",
+];
+
+const inputProps_projects = [
+  { placeholder: "Project title", name: "project_title", type: "text" },
+  {
+    placeholder: "Year published/Year developed",
+    name: "project_year",
+    type: "text",
+  },
+];
+const textAreaProps_projects = {
+  placeholder: "Project Overview",
+  name: "project_overview",
+  rows: 10,
+};
+const sampleDataForProjects = [
+  "Project Title: Project PESO-NET.online",
+  "Year Published/Year Developed: 2023 - 2024",
+  "Project Overview: An automated job portal that uses data analytics to prescribe job positions based on your skillsets.",
+];
+
+const textAreaProps_skills = {
+  name: "skills",
+  placeholder: "Skills",
+  rows: 10,
+};
+const sampleDataForSkills = [
+  "Skills: With a versatile skill set encompassing proficiency in diverse programming languages and expertise in full-stack development, I excel in designing and implementing scalable solutions. My keen problem-solving abilities, attention to detail, and commitment to staying abreast of industry trends make me a valuable asset in delivering high-quality software solutions within dynamic and collaborative team environments.",
+];
+
 export default {
   textAreaProps_cinfo,
   inputProps_cinfo,
@@ -82,4 +148,13 @@ export default {
   sampleDataForSpoken,
   inputProps_hbbies,
   sampleDataForHbbies,
+  textAreaProps_skills,
+  sampleDataForSkills,
+  inputProps_achievements,
+  sampleDataForAchievements,
+  inputProps_projects,
+  textAreaProps_projects,
+  sampleDataForProjects,
+  inputProps_references,
+  sampleDataForReferences,
 };
