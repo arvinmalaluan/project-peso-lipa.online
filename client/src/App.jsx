@@ -7,6 +7,7 @@ import HomePage from "./pages/seeker/HomePage";
 import SearchJobs from "./pages/seeker/SearchJobs";
 import Messenger from "./pages/Messenger";
 import Documents from "./pages/seeker/Documents";
+import Applications from "./pages/seeker/Applications";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/search-jobs" element={<SearchJobs />} />
         <Route path="/messenger" element={<Messenger />} />
         <Route path="/documents" element={<Documents />} />
+        <Route path="/applications" element={<Applications />} />
       </Routes>
     </>
   );

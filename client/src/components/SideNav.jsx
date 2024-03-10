@@ -30,9 +30,9 @@ const SideNav = () => {
         <p className="pb-1 mt-8 text-xs border-b">Manage</p>
         <div className="flex flex-col mt-1">
           <MyAList name="Documents" path="/documents" />
-          <MyAList name="Applications" path="/" />
-          <MyAList name="Profile" path="/users" />
-          <MyAList name="Settings" path="/articles" />
+          <MyAList name="Applications" path="/applications" />
+          <MyAList name="Profile" path="/profile" />
+          <MyAList name="Settings" path="/settings" />
         </div>
 
         <p className="pb-1 mt-8 text-xs border-b">Interact</p>

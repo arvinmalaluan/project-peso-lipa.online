@@ -1,9 +1,17 @@
+// ---------- ---------- ---------- ---------- Text Area ---------- ---------- ---------- ----------
 const textAreaProps_cinfo = {
   name: "resume_objective",
   placeholder: "Resume Objective",
   rows: 10,
 };
 
+const textAreaProps_projects = {
+  placeholder: "Project Overview",
+  name: "project_overview",
+  rows: 10,
+};
+
+// ---------- ---------- ---------- ---------- Input Props ---------- ---------- ---------- ----------
 const inputProps_cinfo = [
   { placeholder: "Fullname", name: "fullname", type: "text" },
   { placeholder: "Contact Number", name: "contact_number", type: "text" },
@@ -40,36 +48,6 @@ const inputProps_hbbies = [
   { placeholder: "Hobbies and Interests", name: "hobbies", type: "text" },
 ];
 
-const sampleDataForCInfo = [
-  "Fullname: Hello",
-  "Contact Number: 09196383586",
-  "Email Address: peso-net.lipe@gmail.com",
-  "Resume Objective: To get rich",
-];
-
-const sampleDataForTEduc = [
-  "College Degree: Bachelor of Science in Information Technology",
-  "Name of Institution: Batangas State University",
-  "Year Graduated: 2024",
-  "Achievements: Cum Laude",
-];
-
-const sampleDataForGEduc = [
-  [
-    "Name of Institution: University of Batangas",
-    "Year Graduated: 2020",
-    "Achievements: n/a",
-  ],
-  [
-    "Name of Institution: Simlong Batangas City",
-    "Year Graduated: 2014",
-    "Achievements: Valedictorian",
-  ],
-];
-
-const sampleDataForSpoken = ["Language: Tagalog", "Proficiency: Basic"];
-const sampleDataForHbbies = ["Hobbies and Interests: Reading"];
-
 const inputProps_achievements = [
   { placeholder: "Reward title", name: "reward_name", type: "text" },
   { placeholder: "Year received", name: "year_received", type: "text" },
@@ -79,12 +57,6 @@ const inputProps_achievements = [
     name: "reward_description",
     type: "text",
   },
-];
-const sampleDataForAchievements = [
-  "Reward title: Cum Laude",
-  "Year received: 2024",
-  "Issuer/Organization: Batangas State University",
-  "Description: n/a",
 ];
 
 const inputProps_references = [
@@ -101,12 +73,6 @@ const inputProps_references = [
     type: "text",
   },
 ];
-const sampleDataForReferences = [
-  "Reference name: Arvin Malaluan",
-  "Relationship to you: Colleague",
-  "Institution: Batangas State University",
-  "Contact Information: 09196383586",
-];
 
 const inputProps_projects = [
   { placeholder: "Project title", name: "project_title", type: "text" },
@@ -116,22 +82,57 @@ const inputProps_projects = [
     type: "text",
   },
 ];
-const textAreaProps_projects = {
-  placeholder: "Project Overview",
-  name: "project_overview",
-  rows: 10,
-};
-const sampleDataForProjects = [
-  "Project Title: Project PESO-NET.online",
-  "Year Published/Year Developed: 2023 - 2024",
-  "Project Overview: An automated job portal that uses data analytics to prescribe job positions based on your skillsets.",
-];
 
 const textAreaProps_skills = {
   name: "skills",
   placeholder: "Skills",
   rows: 10,
 };
+
+// ---------- ---------- ---------- ---------- Example Payloads ---------- ---------- ---------- ----------
+const sampleDataForCInfo = [
+  "Fullname: Hello",
+  "Contact Number: 09196383586",
+  "Email Address: peso-net.lipe@gmail.com",
+  "Resume Objective: To get rich",
+];
+const sampleDataForTEduc = [
+  "College Degree: Bachelor of Science in Information Technology",
+  "Name of Institution: Batangas State University",
+  "Year Graduated: 2024",
+  "Achievements: Cum Laude",
+];
+const sampleDataForGEduc = [
+  [
+    "Name of Institution: University of Batangas",
+    "Year Graduated: 2020",
+    "Achievements: n/a",
+  ],
+  [
+    "Name of Institution: Simlong Batangas City",
+    "Year Graduated: 2014",
+    "Achievements: Valedictorian",
+  ],
+];
+const sampleDataForSpoken = ["Language: Tagalog", "Proficiency: Basic"];
+const sampleDataForHbbies = ["Hobbies and Interests: Reading"];
+const sampleDataForAchievements = [
+  "Reward title: Cum Laude",
+  "Year received: 2024",
+  "Issuer/Organization: Batangas State University",
+  "Description: n/a",
+];
+const sampleDataForReferences = [
+  "Reference name: Arvin Malaluan",
+  "Relationship to you: Colleague",
+  "Institution: Batangas State University",
+  "Contact Information: 09196383586",
+];
+const sampleDataForProjects = [
+  "Project Title: Project PESO-NET.online",
+  "Year Published/Year Developed: 2023 - 2024",
+  "Project Overview: An automated job portal that uses data analytics to prescribe job positions based on your skillsets.",
+];
 const sampleDataForSkills = [
   "Skills: With a versatile skill set encompassing proficiency in diverse programming languages and expertise in full-stack development, I excel in designing and implementing scalable solutions. My keen problem-solving abilities, attention to detail, and commitment to staying abreast of industry trends make me a valuable asset in delivering high-quality software solutions within dynamic and collaborative team environments.",
 ];

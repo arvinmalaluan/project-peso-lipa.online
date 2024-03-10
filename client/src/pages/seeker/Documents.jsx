@@ -1,9 +1,8 @@
 import React from "react";
 import SideNav from "../../components/SideNav";
 import tinyBlocks from "../../utils/tinyBlocks";
-import PersonalInformation from "../../components/--documents/PersonalInformation";
-import WorkRelatedInformation from "../../components/--documents/WorkRelatedInformation";
-import References from "../../components/--documents/References";
+import Resume from "../../components/--documents/Resume";
+import SeekerResumeContextProvider from "../../context/seekerResumeContextProvider";
 
 const Documents = () => {
   return (
@@ -14,9 +13,9 @@ const Documents = () => {
 
       <div className="w-full h-full overflow-y-scroll">
         <div className="w-[1240px] flex items-start gap-4 h-auto px-8 m-auto">
-          <PersonalInformation />
-          {false == true && <WorkRelatedInformation />}
-          {false == true && <References />}
+          <SeekerResumeContextProvider>
+            <Resume />
+          </SeekerResumeContextProvider>
 
           <div className="w-[260px] py-4 ml-4 sticky top-0 h-screen">
             <p className="pb-1 ml-6 text-xs border-b font-[500]">

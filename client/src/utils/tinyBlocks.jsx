@@ -47,11 +47,23 @@ const SampleData = (props) => {
   });
 };
 
+const AddNewButton = (props) => {
+  return (
+    <>
+      <hr className="my-4" />
+      <button className="py-2 text-xs text-white border rounded bg-primary-900">
+        Add more
+      </button>
+    </>
+  );
+};
+
 const tinyBlocks = {
   InputWLabel,
   ThreeContentCard,
   RightSideBar,
   SampleData,
+  AddNewButton,
 };
 
 export default tinyBlocks;

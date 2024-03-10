@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import modelsExport from "../../models/modelsExport";
 import commonExports from "../common/commonExports";
 import tinyBlocks from "../../utils/tinyBlocks";
+import seekerResumeContext from "../../context/seekerResumeContext";
 
 const PersonalInformation = () => {
+  const { setPage } = useContext(seekerResumeContext);
+
   return (
     <div className="w-full mt-4 mb-8">
       <p className="text-xl font-semibold">Personal Information</p>
@@ -90,15 +93,18 @@ const PersonalInformation = () => {
               contents={modelsExport.sampleDataForSpoken}
             />
           </div>
-          <div className="flex items-center w-full gap-2 px-4 pb-4">
-            {modelsExport.inputProps_spoken.map((inputProp, index) => {
-              return <commonExports.Input {...inputProp} key={index} />;
-            })}
+          <div className="flex flex-col w-full px-4 pb-4">
+            <div className="flex items-center gap-2 ">
+              {modelsExport.inputProps_spoken.map((inputProp, index) => {
+                return <commonExports.Input {...inputProp} key={index} />;
+              })}
+            </div>
+            <tinyBlocks.AddNewButton />
           </div>
         </div>
       </div>
 
-      <div className="my-8">
+      <div className="my-8 ">
         <div className="flex gap-2">
           <div className="w-full p-4 custom-bt bg-gray-50 ">
             <p className="font-semibold text-gray-700">Hobbies and Interests</p>
@@ -110,10 +116,12 @@ const PersonalInformation = () => {
               contents={modelsExport.sampleDataForHbbies}
             />
           </div>
-          <div className="flex items-center w-full gap-2 px-4 pb-4">
+          <div className="flex flex-col w-full gap-2 px-4 pb-4">
             {modelsExport.inputProps_hbbies.map((inputProp, index) => {
               return <commonExports.Input {...inputProp} key={index} />;
             })}
+
+            <tinyBlocks.AddNewButton />
           </div>
         </div>
       </div>
@@ -121,7 +129,7 @@ const PersonalInformation = () => {
       <div className="flex justify-end pr-4">
         <button
           className="px-4 py-2 text-xs text-white bg-[#292929] border rounded"
-          onClick={null}
+          onClick={() => setPage(2)}
         >
           Next
         </button>
