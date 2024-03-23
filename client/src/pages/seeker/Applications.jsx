@@ -74,18 +74,18 @@ const Applications = () => {
                   </th>
                   <td className="px-6 py-4">12:24:01 12/12/12</td>
                   <td className="px-6 py-4">
-                    <div class="flex-shrink-0 group block">
-                      <div class="flex items-center">
+                    <div className="flex-shrink-0 block group">
+                      <div className="flex items-center">
                         <img
-                          class="inline-block flex-shrink-0 size-[32px] rounded-full"
+                          className="inline-block flex-shrink-0 size-[32px] rounded-full"
                           src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
                           alt="Image Description"
                         />
-                        <div class="ms-3">
-                          <h3 class="font-[500] text-sm text-gray-800 dark:text-white">
+                        <div className="ms-3">
+                          <h3 className="font-[500] text-sm text-gray-800 dark:text-white">
                             Sample Company, Inc.
                           </h3>
-                          <p class="text-xs font-medium text-gray-400">
+                          <p className="text-xs font-medium text-gray-400">
                             View Profile
                           </p>
                         </div>

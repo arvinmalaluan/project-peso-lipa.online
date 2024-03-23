@@ -8,6 +8,8 @@ import SearchJobs from "./pages/seeker/SearchJobs";
 import Messenger from "./pages/Messenger";
 import Documents from "./pages/seeker/Documents";
 import Applications from "./pages/seeker/Applications";
+import Profile from "./pages/seeker/Profile";
+import Community from "./pages/Community";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/messenger" element={<Messenger />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/applications" element={<Applications />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/community" element={<Community />} />
       </Routes>
     </>
   );

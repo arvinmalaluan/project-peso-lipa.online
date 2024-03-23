@@ -58,12 +58,22 @@ const AddNewButton = (props) => {
   );
 };
 
+const CompatibilityCard = (props) => {
+  return (
+    <div className="p-4 border rounded">
+      <p className="text-xs text-gray-500">UI/UX Designer</p>
+      <p className="font-semibold">68% Compatible</p>
+    </div>
+  );
+};
+
 const tinyBlocks = {
   InputWLabel,
   ThreeContentCard,
   RightSideBar,
   SampleData,
   AddNewButton,
+  CompatibilityCard,
 };
 
 export default tinyBlocks;

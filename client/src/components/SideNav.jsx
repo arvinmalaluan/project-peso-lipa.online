@@ -42,7 +42,7 @@ const SideNav = () => {
         </div>
       </div>
 
-      <div
+      {/* <div
         className="absolute top-1/2 translate-y-2/4 right-[-25px] w-6 h-6 hidden"
         id="toggle-for-side-r"
         onMouseEnter={hoverUtils.onHoverSide}
@@ -70,7 +70,7 @@ const SideNav = () => {
         onClick={(event) => clickUtils.onClickSide(event, "toggle-for-side-l")}
       >
         <svgExports.ArrowForSideBarLeft />
-      </div>
+      </div> */}
     </div>
   );
 };
