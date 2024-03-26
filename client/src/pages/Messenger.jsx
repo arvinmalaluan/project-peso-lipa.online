@@ -49,8 +49,8 @@ const Messenger = () => {
       </div>
 
       <div className="w-full ">
-        <div className="grid grid-cols-12 max-w-[1200px] m-auto">
-          <div className="h-screen col-span-3 border-x">
+        <div className="grid w-full grid-cols-12">
+          <div className="h-screen col-span-3 border-r">
             <div className="px-2 py-2">
               <div className="flex items-center justify-between px-2 mb-2">
                 <p className="font-[500] ">Messages</p>

@@ -10,6 +10,7 @@ import Documents from "./pages/seeker/Documents";
 import Applications from "./pages/seeker/Applications";
 import Profile from "./pages/seeker/Profile";
 import Community from "./pages/Community";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/applications" element={<Applications />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/community" element={<Community />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </>
   );

@@ -1,76 +1,76 @@
 import React from "react";
 
-import Masonry from "../components/ui-kits/Masonry";
-import tinyBlocks from "../utils/tinyBlocks";
-
 const LoginPage = () => {
   return (
-    <div className="grid grid-cols-2">
-      <section className="w-full h-screen col-span-1 overflow-hidden">
-        <Masonry />
-
-        <div className="mt-4">
-          <Masonry />
-        </div>
-      </section>
-
-      <div className="flex items-center justify-center w-full h-full">
-        <section className="col-span-1 px-[156px] w-full">
-          <p className="mb-1 text-xl font-semibold">Sign in to your account</p>
-          <p className="mb-8 text-xs font-[300]">
-            Does not have an account yet?{" "}
-            <a href="" className="text-blue-500 font-[500] hover:underline">
-              Create Account
-            </a>
+    <div className="flex justify-center">
+      <div className="w-[500px] h-screen p-8 bg-gray-50 rounded flex items-center">
+        <form className="flex flex-col w-full gap-2">
+          <p className="mb-4 text-2xl font-semibold text-secondary-900">
+            Sign in
           </p>
 
-          <form action="" className="flex flex-col w-full gap-4">
-            <tinyBlocks.InputWLabel label="Username or Email" />
-            <tinyBlocks.InputWLabel label="Password" type="password" />
+          <div>
+            <label
+              htmlFor=""
+              className="text-sm font-[500] mb-1 text-darkBackground-500"
+            >
+              Username/Email
+            </label>
+            <input
+              type="text"
+              placeholder="Username/Email"
+              className="w-full px-4 py-2 text-sm border rounded outline-none"
+            />
+          </div>
 
-            <div className="flex items-center justify-between mt-2">
-              <div class="flex items-center ">
-                <input
-                  id="default-checkbox"
-                  type="checkbox"
-                  value=""
-                  class="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded  dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label
-                  for="default-checkbox"
-                  class="ms-2 text-xs font-[400]  text-gray-500 dark:text-gray-300"
-                >
-                  Remember me
-                </label>
-              </div>
-              <a href="" className="text-xs text-gray-500 hover:text-blue-500">
-                Forgot Password?
-              </a>
+          <div>
+            <label
+              htmlFor=""
+              className="text-sm font-[500] mb-1 text-darkBackground-500"
+            >
+              Password
+            </label>
+            <input
+              type="text"
+              placeholder="Password"
+              className="w-full px-4 py-2 text-sm border rounded outline-none"
+            />
+          </div>
+
+          <div className="flex items-center justify-between mt-2">
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="remember-me" />
+              <label
+                htmlFor="remember-me"
+                className="text-xs font-[500] text-darkBackground-500 hover:text-primary-900"
+              >
+                Keep me signed in
+              </label>
             </div>
 
-            <button className="px-4 py-2 mt-6 text-sm text-white bg-blue-500 rounded">
+            <a
+              href=""
+              className="text-xs font-[500] text-darkBackground-500 hover:text-primary-900"
+            >
+              Forgot password?
+            </a>
+          </div>
+
+          <input
+            type="submit"
+            className="w-full py-2 mt-8 text-sm text-white rounded cursor-pointer bg-secondary-900"
+          />
+
+          <p className="mt-8 text-sm text-darkBackground-500">
+            Does not have an account yet?{" "}
+            <a
+              href=""
+              className="cursor-pointer hover:underline font-[500] hover:text-primary-900"
+            >
               Sign in
-            </button>
-          </form>
-
-          <div className="relative mt-16">
-            <div className="flex justify-center">
-              <span className="z-10 block w-48 h-auto text-xs text-center text-gray-500 bg-white">
-                Or continue with
-              </span>
-            </div>
-            <div className="absolute z-0 w-full border-b top-2"></div>
-          </div>
-
-          <div className="flex justify-between gap-4 mt-6">
-            <button className="w-full py-2 text-sm border rounded">
-              Gmail
-            </button>
-            <button className="w-full py-2 text-sm border rounded">
-              Facebook
-            </button>
-          </div>
-        </section>
+            </a>
+          </p>
+        </form>
       </div>
     </div>
   );
