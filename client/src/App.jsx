@@ -11,6 +11,8 @@ import Applications from "./pages/seeker/Applications";
 import Profile from "./pages/seeker/Profile";
 import Community from "./pages/Community";
 import Settings from "./pages/Settings";
+import Register from "./pages/Register.Page";
+import R_Home from "./pages/recruiter/R_Home";
 
 function App() {
   return (
@@ -25,6 +27,10 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/community" element={<Community />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/signup" element={<Register />} />
+
+        {/* Recruiter's */}
+        <Route path="/r-home" element={<R_Home />} />
       </Routes>
     </>
   );
