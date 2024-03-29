@@ -13,6 +13,7 @@ import Community from "./pages/Community";
 import Settings from "./pages/Settings";
 import Register from "./pages/Register.Page";
 import R_Home from "./pages/recruiter/R_Home";
+import JobPosting from "./pages/recruiter/JobPosting";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
 
         {/* Recruiter's */}
         <Route path="/r-home" element={<R_Home />} />
+        <Route path="/job-posting" element={<JobPosting />} />
       </Routes>
     </>
   );
