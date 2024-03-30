@@ -7,14 +7,6 @@ const TableFooter = (props) => {
 
     const total_count = document.querySelector("#total-count");
     total_count.innerText = tr.length;
-
-    const checkboxes = document.querySelectorAll("#tbl-checkboxes");
-    const checkbox_ = document.querySelector("#select-all-cb");
-
-    checkbox_.checked = false;
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
   }, [props.rP, props.cP]);
 
   const handleSelectChange = (event) => {
