@@ -96,7 +96,7 @@ export default function Example() {
           <div className="col-span-2">
             {/* Heading */}
             <div className="flex items-center">
-              <h2 className="flex-auto font-semibold text-gray-900">
+              <h2 className="flex-auto font-semibold text-primary-900">
                 {format(firstDayCurrentMonth, "MMMM yyyy")}
               </h2>
               <button
@@ -208,7 +208,7 @@ export default function Example() {
           </div>
 
           <section className="col-span-2 mt-4">
-            <h2 className="font-semibold text-gray-900">
+            <h2 className="font-semibold text-primary-900">
               Schedule for{" "}
               <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
                 {format(selectedDay, "MMM dd, yyy")}

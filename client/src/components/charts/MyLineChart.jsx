@@ -9,53 +9,25 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { line_data } from "../../assets/dummy/dummy_data_charts";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="p-4 bg-white border border-gray-300 rounded">
+        <p className="mb-2 font-semibold">{`Job Post: ${payload[0].payload.job_post}`}</p>
+        <p className="text-sm">{`Applicants: ${payload[0].payload.applicants}`}</p>
+        <p className="text-sm ">{`Views: ${payload[0].payload.views}`}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 export const MyLineChart = () => {
+  const data = line_data;
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
@@ -69,14 +41,21 @@ export const MyLineChart = () => {
           bottom: 0,
         }}
       >
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />} />
+
         <Line
           type="monotone"
-          dataKey="pv"
-          stroke="#8884d8"
+          dataKey="views"
+          stroke="rgba(212, 37, 30, 1)"
+          dot={false}
           activeDot={{ r: 8 }}
         />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        <Line
+          type="monotone"
+          dataKey="applicants"
+          stroke="rgba(18, 9, 73, 1)"
+          dot={false}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
