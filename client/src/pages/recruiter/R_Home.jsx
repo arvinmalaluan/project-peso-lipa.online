@@ -60,30 +60,30 @@ const R_Home = () => {
                 <div className="p-4 border rounded">
                   <p className="text-sm">Latest News About App</p>
 
-                  <ol class="relative border-s border-gray-200 dark:border-gray-700 mt-4">
-                    <li class="mb-4 ms-4">
-                      <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                      <time class="mb-1 text-xs font-normal leading-none text-gray-400 dark:text-gray-500">
+                  <ol className="relative mt-4 border-gray-200 border-s dark:border-gray-700">
+                    <li className="mb-4 ms-4">
+                      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                      <time className="mb-1 text-xs font-normal leading-none text-gray-400 dark:text-gray-500">
                         March 2022
                       </time>
-                      <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                         Marketing UI design in Figma
                       </h3>
-                      <p class="text-xs mt-2 font-normal text-gray-500 dark:text-gray-400">
+                      <p className="mt-2 text-xs font-normal text-gray-500 dark:text-gray-400">
                         All of the pages and components are first designed in
                         Figma and we keep a parity between the two versions even
                         as we update the project.
                       </p>
                     </li>
-                    <li class="mb-3 ms-4">
-                      <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
-                      <time class="mb-1 text-xs font-normal leading-none text-gray-400 dark:text-gray-500">
+                    <li className="mb-3 ms-4">
+                      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                      <time className="mb-1 text-xs font-normal leading-none text-gray-400 dark:text-gray-500">
                         March 2022
                       </time>
-                      <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                         Marketing UI design in Figma
                       </h3>
-                      <p class="text-xs mt-2 font-normal text-gray-500 dark:text-gray-400">
+                      <p className="mt-2 text-xs font-normal text-gray-500 dark:text-gray-400">
                         All of the pages and components are first designed in
                         Figma and we keep a parity between the two versions even
                         as we update the project.

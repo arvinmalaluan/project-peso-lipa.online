@@ -34,7 +34,7 @@ function App() {
         <Route path="/signup" element={<Register />} />
 
         {/* Recruiter's */}
-        <Route path="/r-home" element={<R_Home />} />
+        <Route path="/dashboard" element={<R_Home />} />
         <Route path="/job-posting" element={<JobPosting />} />
         <Route path="/job-posting/new-post" element={<NewPost />} />
         <Route path="/applicant-tracking" element={<ApplicantTracking />} />
