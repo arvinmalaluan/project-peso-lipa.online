@@ -16,6 +16,7 @@ import R_Home from "./pages/recruiter/R_Home";
 import JobPosting from "./pages/recruiter/JobPosting";
 import NewPost from "./components/--job-posts/NewPost";
 import ApplicantTracking from "./pages/recruiter/ApplicantTracking";
+import CandidateSearch from "./pages/recruiter/CandidateSearch";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/job-posting" element={<JobPosting />} />
         <Route path="/job-posting/new-post" element={<NewPost />} />
         <Route path="/applicant-tracking" element={<ApplicantTracking />} />
+        <Route path="/candidate-search" element={<CandidateSearch />} />
       </Routes>
     </>
   );
