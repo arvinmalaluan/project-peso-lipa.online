@@ -3,6 +3,7 @@ import SideNav from "../../components/SideNav";
 import tinyBlocks from "../../utils/tinyBlocks";
 import Resume from "../../components/--documents/Resume";
 import SeekerResumeContextProvider from "../../context/seekerResumeContextProvider";
+import SpeedDial from "../../components/ui-kits/SpeedDial";
 
 const Documents = () => {
   return (
@@ -12,10 +13,12 @@ const Documents = () => {
       </div>
 
       <div className="w-full h-full overflow-y-scroll">
-        <div className="w-[1240px] flex items-start gap-4 h-auto px-8 m-auto">
+        <div className="w-[1240px] relative flex items-start gap-4 h-auto px-8 m-auto">
           <SeekerResumeContextProvider>
             <Resume />
           </SeekerResumeContextProvider>
+
+          <SpeedDial />
 
           <div className="w-[260px] py-4 ml-4 sticky top-0 h-screen">
             <p className="pb-1 ml-6 text-xs border-b font-[500]">
