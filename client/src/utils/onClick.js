@@ -16,6 +16,12 @@ const onClickSide = (event, id) => {
   }
 };
 
+document.body.addEventListener("click", (e) => {
+  if (e.target.id === "show-side-nav-small-device") {
+    alert("hi");
+  }
+});
+
 const utils = {
   onClickSide,
 };

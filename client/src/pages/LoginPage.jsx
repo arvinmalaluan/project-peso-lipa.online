@@ -58,10 +58,10 @@ const LoginPage = () => {
           <p className="mt-8 text-sm text-darkBackground-500">
             Does not have an account yet?{" "}
             <a
-              href=""
+              href="/signup"
               className="cursor-pointer hover:underline font-[500] hover:text-secondary-900"
             >
-              Sign in
+              Sign up
             </a>
           </p>
         </form>

@@ -23,6 +23,8 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/signup" element={<Register />} />
+
         <Route path="/home" element={<HomePage />} />
         <Route path="/search-jobs" element={<SearchJobs />} />
         <Route path="/messenger" element={<Messenger />} />
@@ -31,7 +33,6 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/community" element={<Community />} />
         <Route path="/settings" element={<Settings />} />
-        <Route path="/signup" element={<Register />} />
 
         {/* Recruiter's */}
         <Route path="/dashboard" element={<R_Home />} />

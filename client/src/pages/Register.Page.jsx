@@ -52,7 +52,7 @@ const Register = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-[500px] relative  h-screen p-8 bg-gray-100 flex flex-col justify-center">
+      <div className="w-[500px] relative  h-screen p-8 bg-gray-50 flex flex-col justify-center">
         <div className="flex items-center">
           {visible ? (
             <div className="w-full">
@@ -150,7 +150,7 @@ const Register = () => {
         <p className="mt-10 text-sm text-darkBackground-500 ">
           Already have an account?{" "}
           <a
-            href=""
+            href="/"
             className="font-semibold hover:text-secondary-900 hover:underline"
           >
             Sign in
