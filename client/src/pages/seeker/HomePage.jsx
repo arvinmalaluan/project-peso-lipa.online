@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import SideNav from "../../components/SideNav";
 import Cards from "../../components/ui-kits/Cards";
 import svgExports from "../../assets/svg/exports";
 import { hideSideMenu, showSideMenu } from "../../utils/functions";
 
 const HomePage = () => {
+  let [shown, setShown] = useState(false);
+
+  function onOpen() {
+    showSideMenu();
+    setShown(true);
+  }
+
+  function onClose() {
+    hideSideMenu();
+    setShown(false);
+  }
+
   return (
     <div className="flex w-screen h-screen">
       <div className="hidden lg:block">
@@ -17,16 +29,22 @@ const HomePage = () => {
         </div>
         <div
           className="w-full h-screen bg-darkBackground-100"
-          onClick={hideSideMenu}
+          onClick={onClose}
         ></div>
       </div>
 
       <div className="w-full h-full overflow-y-scroll">
-        <div className="max-w-[1240px] h-auto pb-8 px-8 m-auto">
-          <div className="flex items-center justify-between mt-4">
+        <div className="max-w-[1240px] h-auto pb-8 px-0 m-auto">
+          <div
+            className={
+              shown
+                ? "flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 bg-white border-b"
+                : "sticky top-0 z-10 flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 bg-white border-b"
+            }
+          >
             <button
               className="w-8 h-8 p-1 text-white rounded lg:hidden no-border bg-secondary-900"
-              onClick={showSideMenu}
+              onClick={onOpen}
             >
               <svgExports.BurgerIcon />
             </button>
@@ -48,7 +66,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="w-full mt-4">
+          <div className="w-full px-4 mt-4 sm:px-8">
             <p className="text-xl font-semibold">Home</p>
 
             <div className="mt-4">

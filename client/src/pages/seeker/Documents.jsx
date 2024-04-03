@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SideNav from "../../components/SideNav";
 import tinyBlocks from "../../utils/tinyBlocks";
 import Resume from "../../components/--documents/Resume";
@@ -8,6 +8,18 @@ import { hideSideMenu, showSideMenu } from "../../utils/functions";
 import svgExports from "../../assets/svg/exports";
 
 const Documents = () => {
+  let [shown, setShown] = useState(false);
+
+  function onOpen() {
+    showSideMenu();
+    setShown(true);
+  }
+
+  function onClose() {
+    hideSideMenu();
+    setShown(false);
+  }
+
   return (
     <div className="flex w-screen h-screen">
       <div className="hidden lg:block">
@@ -20,17 +32,23 @@ const Documents = () => {
         </div>
         <div
           className="w-full h-screen bg-darkBackground-100"
-          onClick={hideSideMenu}
+          onClick={onClose}
         ></div>
       </div>
 
       <div className="w-full h-full overflow-y-scroll">
-        <div className="m-w-[1240px] relative flex items-start gap-4 h-auto px-4 sm:px-8 m-auto">
+        <div className="m-w-[1240px] relative flex items-start gap-4 h-auto px-0 m-auto">
           <div className="w-full">
-            <div className="flex items-center justify-between mt-4">
+            <div
+              className={
+                shown
+                  ? "flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 bg-white border-b"
+                  : "sticky top-0 z-10 flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 bg-white border-b"
+              }
+            >
               <button
                 className="w-8 h-8 p-1 text-white rounded lg:hidden no-border bg-secondary-900"
-                onClick={showSideMenu}
+                onClick={onOpen}
               >
                 <svgExports.BurgerIcon />
               </button>
@@ -52,9 +70,11 @@ const Documents = () => {
               </div>
             </div>
 
-            <SeekerResumeContextProvider>
-              <Resume />
-            </SeekerResumeContextProvider>
+            <div className="px-4 sm:px-8">
+              <SeekerResumeContextProvider>
+                <Resume />
+              </SeekerResumeContextProvider>
+            </div>
           </div>
 
           <SpeedDial />

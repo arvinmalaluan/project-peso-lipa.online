@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import SideNav from "../../components/SideNav";
 import tinyBlocks from "../../utils/tinyBlocks";
 import { hideSideMenu, showSideMenu } from "../../utils/functions";
 import svgExports from "../../assets/svg/exports";
 
 const Profile = () => {
+  let [shown, setShown] = useState(false);
+
+  function onOpen() {
+    showSideMenu();
+    setShown(true);
+  }
+
+  function onClose() {
+    hideSideMenu();
+    setShown(false);
+  }
+
   return (
     <div className="flex w-screen h-screen">
       <div className="hidden lg:block">
@@ -17,16 +29,22 @@ const Profile = () => {
         </div>
         <div
           className="w-full h-screen bg-darkBackground-100"
-          onClick={hideSideMenu}
+          onClick={onClose}
         ></div>
       </div>
 
       <div className="w-full h-full overflow-y-scroll">
-        <div className="m-w-[1240px] grid grid-cols-12 gap-4 h-auto px-4 sm:px-8 m-auto py-4 sm:py-8">
-          <div className="flex items-center justify-between col-span-12 mb-4">
+        <div className="m-w-[1240px] grid grid-cols-12 gap-4 h-auto px-0 m-auto">
+          <div
+            className={
+              shown
+                ? "flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 bg-white border-b"
+                : "sticky top-0 z-10 flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 bg-white border-b"
+            }
+          >
             <button
               className="w-8 h-8 p-1 text-white rounded lg:hidden no-border bg-secondary-900"
-              onClick={showSideMenu}
+              onClick={onOpen}
             >
               <svgExports.BurgerIcon />
             </button>
@@ -48,7 +66,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-start col-span-12 gap-4 mb-4 sm:mb-4 md:pl-4 md:pr-6 sm:flex-row md:col-span-3 md:block">
+          <div className="flex flex-col items-start col-span-12 gap-4 px-4 mb-4 sm:px-8 sm:mb-4 md:pl-8 md:pr-0 sm:flex-row md:col-span-3 md:block">
             <div className="md:w-full md:mx-auto overflow-hidden rounded-full w-[100px]">
               <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
             </div>
@@ -69,7 +87,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="col-span-12 md:col-span-9">
+          <div className="col-span-12 px-4 sm:px-8 md:col-span-9">
             <div className="w-full">
               <p className="text-sm font-semibold">Resume Objective</p>
               <p className="p-4 mt-2 text-sm border rounded">

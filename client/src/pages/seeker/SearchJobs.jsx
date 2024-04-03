@@ -37,7 +37,13 @@ const SearchJobs = () => {
       <div className="w-full h-full overflow-y-scroll">
         <div className="max-w-[1240px] flex items-start gap-4 h-auto px-0 md:px-8 m-auto">
           <div className="w-full ">
-            <div className="z-20 flex items-center justify-between px-4 pb-4 mt-4 border-b md:px-0">
+            <div
+              className={
+                shown
+                  ? "flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 md:px-0 bg-white border-b"
+                  : "sticky top-0 z-10 flex items-center justify-between w-full col-span-12 px-4 md:px-0 sm:px-8 py-3 bg-white border-b"
+              }
+            >
               <button
                 className="w-8 h-8 p-1 text-white rounded lg:hidden no-border bg-secondary-900"
                 onClick={onOpen}
@@ -66,7 +72,7 @@ const SearchJobs = () => {
               className={
                 shown
                   ? "pt-4 pb-2 mb-2 bg-white px-4 md:px-0"
-                  : "sticky top-0 pt-4 pb-2 mb-2  bg-white px-4 md:px-0"
+                  : "sticky top-[59px] pt-2 pb-4 mb-2  bg-white px-4 sm:px-8 md:px-0"
               }
             >
               <div className="flex overflow-hidden border rounded">
@@ -86,7 +92,7 @@ const SearchJobs = () => {
               </div>
             </div>
 
-            <div id="reco-positions" className="px-4 md:px-0">
+            <div id="reco-positions" className="px-4 sm:px-8 md:px-0">
               <p className="mb-2 text-sm font-semibold">
                 Recommended Positions
               </p>

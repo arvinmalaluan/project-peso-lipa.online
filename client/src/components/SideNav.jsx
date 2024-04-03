@@ -32,7 +32,25 @@ const SideNav = () => {
           <MyAList name="Documents" path="/documents" />
           <MyAList name="Applications" path="/applications" />
           <MyAList name="Profile" path="/profile" />
-          <MyAList name="Settings" path="/settings" />
+
+          <Link
+            to="/settings"
+            className={`px-2 hidden md:block py-1 rounded text-sm hover:bg-gray-200 ${
+              useLocationHook("/settings") ? "font-semibold" : "text-gray-500"
+            }`}
+          >
+            Settings
+          </Link>
+
+          <details className="block px-2 text-sm md:hidden">
+            <summary className="py-1 list-none">Settings</summary>
+            <div className="flex flex-col">
+              <MyAList name="Public Profile" path="/settings#public-profile" />
+              <MyAList name="Account" path="/settings#account" />
+              <MyAList name="Appearance" path="/settings#appearance" />
+              <MyAList name="Notifications" path="/settings#notifications" />
+            </div>
+          </details>
         </div>
 
         <p className="pb-1 mt-8 text-xs border-b">Interact</p>
