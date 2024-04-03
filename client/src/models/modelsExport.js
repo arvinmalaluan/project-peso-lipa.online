@@ -134,7 +134,7 @@ const sampleDataForProjects = [
   "Project Overview: An automated job portal that uses data analytics to prescribe job positions based on your skillsets.",
 ];
 const sampleDataForSkills = [
-  "Skills: With a versatile skill set encompassing proficiency in diverse programming languages and expertise in full-stack development, I excel in designing and implementing scalable solutions. My keen problem-solving abilities, attention to detail, and commitment to staying abreast of industry trends make me a valuable asset in delivering high-quality software solutions within dynamic and collaborative team environments.",
+  "Skills: With a versatile skill set encompassing proficiency in diverse programming languages and expertise in full-stack development, I excel in designing and implementing scalable solutions.",
 ];
 
 export default {

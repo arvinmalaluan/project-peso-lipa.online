@@ -11,7 +11,7 @@ const Applications = () => {
       </div>
 
       <div className="w-full h-full overflow-y-scroll">
-        <div className="w-[1240px] flex flex-col gap-4 h-auto px-8 m-auto">
+        <div className="m-w-[1240px] flex flex-col gap-4 h-auto px-8 m-auto">
           <div className="mt-8">
             <p className="text-sm font-semibold">Showing 45 Applications</p>
             <p className="text-xs text-gray-500">Best of luck applicant!</p>

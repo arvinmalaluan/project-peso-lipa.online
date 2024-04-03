@@ -40,7 +40,7 @@ const RightSideBar = (props) => {
 const SampleData = (props) => {
   return props.contents.map((content, index) => {
     return (
-      <p className="text-xs text-gray-500" key={index}>
+      <p className="hidden text-xs text-gray-500 sm:block" key={index}>
         {content}
       </p>
     );

@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SpeedDial = () => {
+  const [show, setShow] = useState(false);
+
+  function openSpeedDial() {
+    setShow((prev) => !prev);
+  }
+
   return (
-    <div data-dial-init className="fixed end-6 bottom-6 group">
+    <div data-dial-init className="fixed start-8 bottom-8 group lg:hidden">
       <div
         id="speed-dial-menu-default"
-        className="flex flex-col items-center hidden mb-4 space-y-2"
+        className={
+          show ? "flex flex-col items-center mb-4 space-y-2" : "hidden"
+        }
       >
         <button
           type="button"
@@ -116,7 +124,8 @@ const SpeedDial = () => {
         data-dial-toggle="speed-dial-menu-default"
         aria-controls="speed-dial-menu-default"
         aria-expanded="false"
-        className="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+        className="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800"
+        onClick={openSpeedDial}
       >
         <svg
           className="w-5 h-5 transition-transform group-hover:rotate-45"
@@ -127,9 +136,9 @@ const SpeedDial = () => {
         >
           <path
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             d="M9 1v16M1 9h16"
           />
         </svg>
