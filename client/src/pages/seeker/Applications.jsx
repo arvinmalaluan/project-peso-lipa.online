@@ -1,40 +1,68 @@
 import React from "react";
 import SideNav from "../../components/SideNav";
 import svgExports from "../../assets/svg/exports";
-import SeekerResumeContextProvider from "../../context/seekerResumeContextProvider";
+import { hideSideMenu, showSideMenu } from "../../utils/functions";
 
 const Applications = () => {
   return (
     <div className="flex w-screen h-screen">
-      <div>
+      <div className="hidden lg:block">
         <SideNav />
       </div>
 
+      <div className="absolute z-10 hidden w-screen" id="side-nav-small-screen">
+        <div className="absolute h-screen bg-white">
+          <SideNav />
+        </div>
+        <div
+          className="w-full h-screen bg-darkBackground-100"
+          onClick={hideSideMenu}
+        ></div>
+      </div>
+
       <div className="w-full h-full overflow-y-scroll">
-        <div className="m-w-[1240px] flex flex-col gap-4 h-auto px-8 m-auto">
+        <div className="m-w-[1240px] flex flex-col gap-4 h-auto px-4 sm:px-8 m-auto">
+          <div className="flex items-center justify-between mt-4">
+            <button
+              className="w-8 h-8 p-1 text-white rounded lg:hidden no-border bg-secondary-900"
+              onClick={showSideMenu}
+            >
+              <svgExports.BurgerIcon />
+            </button>
+
+            <input
+              type="text"
+              className="hidden w-2/4 px-4 py-2 text-xs border rounded-full outline-none lg:block w-100"
+              placeholder="Search here"
+            />
+
+            <div className="flex gap-2">
+              <input
+                type="text"
+                className="px-4 py-2 text-xs border rounded-full outline-none lg:hidden w-100"
+                placeholder="Search here"
+              />
+              <div className="w-8 h-8 rounded-full bg-gray-50"></div>
+              <div className="w-8 h-8 rounded-full bg-gray-50"></div>
+            </div>
+          </div>
+
           <div className="mt-8">
             <p className="text-sm font-semibold">Showing 45 Applications</p>
             <p className="text-xs text-gray-500">Best of luck applicant!</p>
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="flex gap-2">
-              <span className="px-4 py-2 text-xs border rounded-full">All</span>
-              <span className="px-4 py-2 text-xs border rounded-full">
-                Pending
-              </span>
-              <span className="px-4 py-2 text-xs border rounded-full">
-                On Hold
-              </span>
-              <span className="px-4 py-2 text-xs border rounded-full">
-                Candidate
-              </span>
+            <div className="w-full">
+              <input
+                type="text"
+                className="px-4 py-2 text-xs rounded w-[35%] bg-gray-50"
+                placeholder="Search here"
+              />
             </div>
-            <div>
-              <button className="px-4 py-2 text-xs border rounded-full">
-                hello
-              </button>
-            </div>
+            <button className="flex-shrink-0 px-4 py-2 text-xs border rounded">
+              Filter by status
+            </button>
           </div>
 
           <div className="relative my-4 overflow-x-auto border rounded-lg">
@@ -47,16 +75,16 @@ const Applications = () => {
                   <th scope="col" className="px-6 py-3">
                     Date Applied
                   </th>
-                  <th scope="col" className="px-6 py-3 rounded-e-lg">
+                  <th scope="col" className="px-6 py-3">
                     Company
                   </th>
-                  <th scope="col" className="px-6 py-3 rounded-e-lg">
+                  <th scope="col" className="px-6 py-3">
                     Type
                   </th>
-                  <th scope="col" className="px-6 py-3 rounded-e-lg">
+                  <th scope="col" className="px-6 py-3">
                     Position
                   </th>
-                  <th scope="col" className="px-6 py-3 rounded-e-lg">
+                  <th scope="col" className="px-6 py-3">
                     Status
                   </th>
                   <th scope="col" className="px-6 py-3 rounded-e-lg">
