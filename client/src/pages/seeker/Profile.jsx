@@ -1,33 +1,77 @@
 import React from "react";
 import SideNav from "../../components/SideNav";
 import tinyBlocks from "../../utils/tinyBlocks";
+import { hideSideMenu, showSideMenu } from "../../utils/functions";
+import svgExports from "../../assets/svg/exports";
 
 const Profile = () => {
   return (
     <div className="flex w-screen h-screen">
-      <div>
+      <div className="hidden lg:block">
         <SideNav />
       </div>
 
+      <div className="absolute z-10 hidden w-screen" id="side-nav-small-screen">
+        <div className="absolute h-screen bg-white">
+          <SideNav />
+        </div>
+        <div
+          className="w-full h-screen bg-darkBackground-100"
+          onClick={hideSideMenu}
+        ></div>
+      </div>
+
       <div className="w-full h-full overflow-y-scroll">
-        <div className="w-[1240px] grid grid-cols-12 gap-4 h-auto px-8 m-auto py-8">
-          <div className="col-span-3 pl-4 pr-6">
-            <div className="w-full mx-auto overflow-hidden rounded-full">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-            </div>
-            <p className="mt-4 text-2xl font-semibold">Arvin Malaluan</p>
-            <p className="text-sm ">@arvinmalaluan</p>
-
-            <p className="mt-4 text-sm">bio</p>
-
-            <button className="w-full py-2 mt-4 text-sm border rounded">
-              Edit Profile
+        <div className="m-w-[1240px] grid grid-cols-12 gap-4 h-auto px-4 sm:px-8 m-auto py-4 sm:py-8">
+          <div className="flex items-center justify-between col-span-12 mb-4">
+            <button
+              className="w-8 h-8 p-1 text-white rounded lg:hidden no-border bg-secondary-900"
+              onClick={showSideMenu}
+            >
+              <svgExports.BurgerIcon />
             </button>
+
+            <input
+              type="text"
+              className="hidden w-2/4 px-4 py-2 text-xs border rounded-full outline-none lg:block w-100"
+              placeholder="Search here"
+            />
+
+            <div className="flex gap-2">
+              <input
+                type="text"
+                className="px-4 py-2 text-xs border rounded-full outline-none lg:hidden w-100"
+                placeholder="Search here"
+              />
+              <div className="w-8 h-8 rounded-full bg-gray-50"></div>
+              <div className="w-8 h-8 rounded-full bg-gray-50"></div>
+            </div>
           </div>
 
-          <div className="col-span-9">
-            <div>
-              <p className="text-sm">Resume Objective</p>
+          <div className="flex flex-col items-start col-span-12 gap-4 mb-4 sm:mb-4 md:pl-4 md:pr-6 sm:flex-row md:col-span-3 md:block">
+            <div className="md:w-full md:mx-auto overflow-hidden rounded-full w-[100px]">
+              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            </div>
+
+            <div className="flex flex-col w-full sm:items-start sm:justify-between sm:flex-row md:flex-col">
+              <div>
+                <p className="mt-0 text-2xl font-semibold md:mt-4">
+                  Arvin Malaluan
+                </p>
+                <p className="text-sm ">@arvinmalaluan</p>
+
+                <p className="mt-0 text-sm md:mt-4">bio</p>
+              </div>
+
+              <button className="w-full py-2 mt-4 text-sm border rounded sm:mt-0 md:mt-4 sm:px-4 sm:w-auto md:w-full">
+                Edit Profile
+              </button>
+            </div>
+          </div>
+
+          <div className="col-span-12 md:col-span-9">
+            <div className="w-full">
+              <p className="text-sm font-semibold">Resume Objective</p>
               <p className="p-4 mt-2 text-sm border rounded">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi
                 consectetur sunt maxime dolorem obcaecati alias nisi accusamus
@@ -38,9 +82,9 @@ const Profile = () => {
             </div>
 
             <div className="mt-8">
-              <p className="text-sm">Compatible Positions</p>
+              <p className="text-sm font-semibold">Compatible Positions</p>
 
-              <div className="grid grid-cols-4 gap-2 py-2 ">
+              <div className="grid grid-cols-2 gap-2 py-2 md:grid-cols-3">
                 <tinyBlocks.CompatibilityCard />
                 <tinyBlocks.CompatibilityCard />
                 <tinyBlocks.CompatibilityCard />
@@ -54,9 +98,9 @@ const Profile = () => {
               </div>
             </div>
 
-            <p className="mt-8 text-sm">Posts in community</p>
+            <p className="mt-8 text-sm font-semibold">Posts in community</p>
 
-            <div className="grid grid-cols-2 gap-4 mt-2">
+            <div className="grid grid-cols-1 gap-4 mt-2 sm:grid-cols-2">
               <div className="p-4 border rounded">
                 <div className="flex items-end justify-between">
                   <p className="text-sm font-semibold">Hello</p>
@@ -69,7 +113,7 @@ const Profile = () => {
                   Aliquid repudiandae dolor quaerat optio reiciendis sint.
                 </p>
 
-                <div className="flex gap-4 mt-4">
+                <div className="hidden gap-4 mt-4 xl:flex">
                   <p className="text-xs">20 views</p>
                   <p className="text-xs">10 comments</p>
                   <p className="text-xs">30 engagements</p>
@@ -88,7 +132,7 @@ const Profile = () => {
                   Aliquid repudiandae dolor quaerat optio reiciendis sint.
                 </p>
 
-                <div className="flex gap-4 mt-4">
+                <div className="hidden gap-4 mt-4 xl:flex">
                   <p className="text-xs">20 views</p>
                   <p className="text-xs">10 comments</p>
                   <p className="text-xs">30 engagements</p>
