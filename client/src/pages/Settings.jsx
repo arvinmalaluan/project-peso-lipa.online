@@ -245,7 +245,7 @@ const Settings = () => {
                     </button>
                   </div>
 
-                  <div className="col-span-1 pt-4 pl-8">
+                  <div className="hidden col-span-1 pt-4 pl-8 sm:block">
                     <div className="relative flex flex-col mb-4">
                       <p className="text-sm font-[500] mb-4">Profile Picture</p>
                       <input
