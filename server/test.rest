@@ -1,0 +1,37 @@
+###
+POST http://localhost:3000/api/v1/https/auth/signup
+Content-Type: application/json
+
+{
+    "email": "recruiter.email@gmail.com",
+    "username": "recruiter",
+    "password": "default",
+    "recovery_email": "recruiter.recovery@gmail.com",
+    "fkid_role": 2
+}
+
+###
+POST http://localhost:3000/api/v1/https/auth/signin
+Content-Type: application/json
+
+{
+    "email": "seeker.email@gmail.com",
+    "password": "default"
+}
+
+###
+POST http://localhost:3000/api/v1/https/profile/create
+Content-Type: application/json
+
+{
+    "name": "Google",
+    "location": "Santo Tomas, Batangas",
+    "bio": "At your service.",
+    "portfolio_link": "not applicable",
+    "gender": "not applicable",
+    "educational_attainment": "not applicable",
+    "fb_link": "https://facebook.com/google",
+    "ig_link": "https://instagram.com/google",
+    "ln_link": "https://linkedin.com/google",
+    "fkid_account": "4"
+}
