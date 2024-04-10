@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import useLocationHook from "../hooks/useLocationHook";
 import { Link } from "react-router-dom";
 import {
@@ -11,6 +11,7 @@ import {
   ProfileIcon,
   SettingsIcon,
 } from "../assets/svg/recruiterIcons";
+import authenticatedContext from "../context/authentication/authenticatedContext";
 
 const MyAList = (props) => {
   return (
@@ -29,8 +30,10 @@ const MyAList = (props) => {
 };
 
 const SideNavRecru = () => {
+  const { profile } = useContext(authenticatedContext);
+
   return (
-    <div className="w-100">
+    <div className="h-full w-100">
       <div
         className="w-[260px] h-full relative p-4 border-r flex flex-col gap-4 bg-secondary-900"
         id="side-bar"
@@ -42,26 +45,28 @@ const SideNavRecru = () => {
             className="logo-height"
           />
           <div>
-            <p className="font-medium text-white ">PESO-LIPA App</p>
-            <p className="text-xs text-gray-300">Admin Side</p>
+            <p className="font-medium text-white ">
+              {profile ? profile.name : "No Profile Found"}
+            </p>
+            <p className="text-xs text-gray-300">Recruiter</p>
           </div>
         </div>
 
         <div className="flex flex-col">
-          <MyAList name="Dashboard" path="/dashboard" icon={<HomeIcon />} />
+          <MyAList name="Dashboard" path="/" icon={<HomeIcon />} />
           <MyAList
             name="Job Posting"
-            path="/job-posting"
+            path="/recruiter/job-posting"
             icon={<JobPostingIcon />}
           />
           <MyAList
             name="Applicant Tracking"
-            path="/applicant-tracking"
+            path="/recruiter/applicant-tracking"
             icon={<ApplicantTracking />}
           />
           <MyAList
             name="Candidate Search"
-            path="/candidate-search"
+            path="/recruiter/candidate-search"
             icon={<CandidateSearchIcon />}
           />
         </div>
@@ -84,8 +89,16 @@ const SideNavRecru = () => {
         <hr />
 
         <div className="flex flex-col">
-          <MyAList name="Profile" path="/profile" icon={<ProfileIcon />} />
-          <MyAList name="Settings" path="/settings" icon={<SettingsIcon />} />
+          <MyAList
+            name="Profile"
+            path="/recruiter/profile"
+            icon={<ProfileIcon />}
+          />
+          <MyAList
+            name="Settings"
+            path="/recruiter/settings"
+            icon={<SettingsIcon />}
+          />
         </div>
       </div>
     </div>

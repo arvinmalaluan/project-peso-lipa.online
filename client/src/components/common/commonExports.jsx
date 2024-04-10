@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import useLocationHook from "../../hooks/useLocationHook";
 
 const TextArea = (props) => {
   return (
@@ -24,7 +26,23 @@ const Input = (props) => {
   );
 };
 
+const MyAList = (props) => {
+  return (
+    <Link
+      to={props.path}
+      className={`px-2 py-1 rounded text-sm  hover:bg-gray-200 ${
+        useLocationHook(props.path)
+          ? "font-semibold text-secondary-900 bg-gray-100"
+          : "text-gray-500"
+      }`}
+    >
+      {props.name}
+    </Link>
+  );
+};
+
 export default {
   TextArea,
   Input,
+  MyAList,
 };

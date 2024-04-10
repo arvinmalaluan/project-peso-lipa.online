@@ -4,11 +4,14 @@ import App from "./App.jsx";
 import "./index.css";
 
 import { BrowserRouter } from "react-router-dom";
+import GeneralLoginContextProvider from "./context/authentication/generalLoginContextProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <GeneralLoginContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </GeneralLoginContextProvider>
   </React.StrictMode>
 );

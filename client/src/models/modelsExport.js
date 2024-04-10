@@ -96,6 +96,7 @@ const sampleDataForCInfo = [
   "Email Address: peso-net.lipe@gmail.com",
   "Resume Objective: To get rich",
 ];
+
 const sampleDataForTEduc = [
   "College Degree: Bachelor of Science in Information Technology",
   "Name of Institution: Batangas State University",
@@ -139,10 +140,9 @@ const sampleDataForSkills = [
 
 export default {
   textAreaProps_cinfo,
-  inputProps_cinfo,
   inputProps_teduc,
   inputProps_geduc,
-  sampleDataForCInfo,
+  // sampleDataForCInfo,
   sampleDataForTEduc,
   sampleDataForGEduc,
   inputProps_spoken,

@@ -42,6 +42,7 @@ CREATE TABLE tbl_job_postings (
 	salary varchar(255) not null,
 	location varchar(255) not null,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    views int DEFAULT 0,
     fkid_profile int,
     PRIMARY KEY (id),
     FOREIGN KEY (fkid_profile) REFERENCES tbl_profile(id)

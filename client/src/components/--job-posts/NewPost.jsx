@@ -5,6 +5,7 @@ import DatePicker from "../common/input-box/DatePicker";
 import Select from "../common/input-box/Select";
 import TextArea from "../common/input-box/TextArea";
 import svgExports from "../../assets/svg/exports";
+import { Link } from "react-router-dom";
 
 const NewPost = () => {
   return (
@@ -14,15 +15,16 @@ const NewPost = () => {
       <div className="w-full h-screen overflow-y-scroll">
         <div className="w-[700px] m-auto">
           <div className="py-4">
-            <a
-              href=""
+            <Link
+              to="/recruiter/job-posting"
               className="flex items-center gap-2 mb-4 text-sm text-darkBackground-500 hover:text-secondary-900"
             >
               <div>
                 <svgExports.LongArrow />
               </div>
               <span>Back</span>
-            </a>
+            </Link>
+
             <p className="mb-1 text-2xl">Post a job on PESO App</p>
             <p className="mb-4 text-sm text-darkBackground-500">
               The #1 job board for finding jobs and hiring talents.

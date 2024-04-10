@@ -20,11 +20,11 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/v1/https/profile/create
+PATCH  http://localhost:3000/api/v1/https/profile/patch/3
 Content-Type: application/json
 
 {
-    "name": "Google",
+    "name": "GoogleInc",
     "location": "Santo Tomas, Batangas",
     "bio": "At your service.",
     "portfolio_link": "not applicable",
@@ -34,4 +34,25 @@ Content-Type: application/json
     "ig_link": "https://instagram.com/google",
     "ln_link": "https://linkedin.com/google",
     "fkid_account": "4"
+}
+
+###
+POST http://localhost:3000/api/v1/https/jobpost/create
+Content-Type: application/json
+
+{
+    "job_title": "Senior Software Engineer",
+    "employment_type": "Full-time",
+    "required_experience": "5+ years",
+    "required_education": "Bachelor's degree in Computer Science or related field",
+    "job_description": "We are seeking a highly skilled Senior Software Engineer to join our dynamic team...",
+    "email_address": "jobs@example.com",
+    "application_deadline": "2024-05-15",
+    "required_skills": "Java, Spring Boot, React.js, SQL",
+    "qualifications": "Strong problem-solving skills, excellent communication skills, ability to work in a team environment",
+    "responsibilities": "Designing, coding, testing, and debugging software applications...",
+    "benefits": "Competitive salary, health insurance, retirement plan, flexible work hours",
+    "salary": "$90,000 - $120,000 per year",
+    "location": "Batangas City",
+    "fkid_profile": 3
 }

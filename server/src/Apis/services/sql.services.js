@@ -15,6 +15,20 @@ module.exports = {
     );
   },
 
+  get_id: (query_variables, return_message) => {
+    db_conn.query(
+      `SELECT * FROM ${query_variables.table_name} WHERE id = ${query_variables.id}`,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          return return_message(error);
+        }
+        console.log(results);
+        return return_message(null, results);
+      }
+    );
+  },
+
   get_w_condition: (query_variables, return_message) => {
     db_conn.query(
       `SELECT ${query_variables.fields} FROM ${query_variables.table_name} WHERE ${query_variables.condition}`,
@@ -46,6 +60,20 @@ module.exports = {
   patch_: (query_variables, callBack) => {
     db_conn.query(
       `UPDATE ${query_variables.table_name} SET ${query_variables.values} WHERE id = ${query_variables.id}`,
+      [],
+      (error, results) => {
+        if (error) {
+          return callBack(error);
+        }
+
+        return callBack(null, results);
+      }
+    );
+  },
+
+  patch_using_condition: (query_variables, callBack) => {
+    db_conn.query(
+      `UPDATE ${query_variables.table_name} SET ${query_variables.values} WHERE ${query_variables.condition}`,
       [],
       (error, results) => {
         if (error) {

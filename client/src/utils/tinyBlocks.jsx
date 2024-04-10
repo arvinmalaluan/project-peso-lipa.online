@@ -15,7 +15,7 @@ const InputWLabel = (props) => {
 
 const ThreeContentCard = () => {
   return (
-    <div className="p-4 border">
+    <div className="p-4 border rounded">
       <p className="text-sm text-gray-500">Engineer</p>
       <p className="font-semibold text-blue-500">90% Compatibility</p>
       <p className="mt-5 text-sm">Explore</p>
@@ -50,7 +50,7 @@ const SampleData = (props) => {
 const AddNewButton = (props) => {
   return (
     <>
-      <hr className="my-4" />
+      <hr className="mt-2 mb-4" />
       <button className="py-2 text-xs text-white border rounded bg-primary-900">
         Add more
       </button>

@@ -5,7 +5,7 @@ module.exports = {
     const empty_array = [];
 
     values.map((value, index) => {
-      empty_array.push(`'${value}'`);
+      empty_array.push(`"${value}"`);
     });
 
     return empty_array;

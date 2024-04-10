@@ -1,8 +1,20 @@
 import React, { useContext } from "react";
-import modelsExport from "../../models/modelsExport";
-import commonExports from "../common/commonExports";
-import tinyBlocks from "../../utils/tinyBlocks";
 import seekerResumeContext from "../../context/seekerResumeContext";
+import { Content } from "../__documents/__components";
+import {
+  sample_data_skills,
+  sample_data_achievements,
+  sample_data_projects,
+  sample_data_work_experiences,
+} from "../__documents/__input_sample_data";
+import {
+  achievements_rewards,
+  notable_projects,
+  skills,
+  text_area_notable_projects,
+  text_area_work_experiences,
+  work_experiences,
+} from "../__documents/__input_structure";
 
 const WorkRelatedInformation = () => {
   const { setPage } = useContext(seekerResumeContext);
@@ -11,65 +23,46 @@ const WorkRelatedInformation = () => {
     <div className="w-full mt-4 mb-8">
       <p className="text-xl font-semibold">Work Related Information</p>
 
-      <div className="flex flex-col gap-2 mt-4 sm:flex-row">
-        <div className="w-full p-0 sm:p-4 bg-transparent sm:bg-[#292929] rounded">
-          <p className="text-sm font-semibold text-black sm:text-white sm:text-base">
-            Skills
-          </p>
-
-          <p className="mt-5 font-[500] text-sm  text-gray-300 hidden sm:block">
-            Example data
-          </p>
-          <tinyBlocks.SampleData contents={modelsExport.sampleDataForSkills} />
-        </div>
-
-        <div className="flex flex-col w-full gap-2 px-0 sm:px-4">
-          <commonExports.TextArea {...modelsExport.textAreaProps_skills} />
-        </div>
+      <div className="mb-8">
+        <Content
+          data={sample_data_skills}
+          title="Skills"
+          structures={skills}
+          subtitle="Skills"
+          add_new={true}
+        />
       </div>
 
-      <div className="flex flex-col gap-2 mt-8 sm:flex-row">
-        <div className="w-full p-0 sm:p-4 bg-transparent sm:bg-[#292929] rounded">
-          <p className="text-sm font-semibold text-black sm:text-white sm:text-base">
-            Achievements and Rewards
-          </p>
-
-          <p className="mt-5 font-[500] text-sm text-gray-300 hidden sm:block">
-            Example data
-          </p>
-          <tinyBlocks.SampleData
-            contents={modelsExport.sampleDataForAchievements}
-          />
-        </div>
-
-        <div className="flex flex-col w-full gap-2 px-0 sm:px-4">
-          {modelsExport.inputProps_achievements.map((inputProp, index) => {
-            return <commonExports.Input {...inputProp} key={index} />;
-          })}
-        </div>
+      <div className="mb-8">
+        <Content
+          data={sample_data_achievements}
+          title="Achievements and Rewards"
+          structures={achievements_rewards}
+          subtitle="Achievements and Rewards"
+          add_new={true}
+        />
       </div>
 
-      <div className="flex flex-col gap-2 mt-8 sm:flex-row">
-        <div className="w-full p-0 sm:p-4 bg-transparent sm:bg-[#292929] rounded">
-          <p className="text-sm font-semibold text-black sm:text-white sm:text-base">
-            Notable Projects
-          </p>
+      <div className="mb-8">
+        <Content
+          data={sample_data_projects}
+          title="Notable Projects"
+          subtitle="Notable Projects"
+          structures={notable_projects}
+          textarea_content={text_area_notable_projects}
+          add_new={true}
+        />
+      </div>
 
-          <p className="mt-5 hidden sm:block font-[500] text-sm text-gray-300">
-            Example data
-          </p>
-          <tinyBlocks.SampleData
-            contents={modelsExport.sampleDataForProjects}
-          />
-        </div>
-
-        <div className="flex flex-col w-full gap-2 px-0 sm:px-4">
-          {modelsExport.inputProps_projects.map((inputProp, index) => {
-            return <commonExports.Input {...inputProp} key={index} />;
-          })}
-
-          <commonExports.TextArea {...modelsExport.textAreaProps_projects} />
-        </div>
+      <div className="mb-8">
+        <Content
+          data={sample_data_work_experiences}
+          title="Work Experiences"
+          subtitle="Work Experiences"
+          structures={work_experiences}
+          textarea_content={text_area_work_experiences}
+          add_new={true}
+        />
       </div>
 
       <div className="flex justify-end gap-2 pt-8 pr-0 sm:pr-4">

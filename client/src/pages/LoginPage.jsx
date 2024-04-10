@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import InputWithIcon from "../components/common/input-box/InputWithIcon";
 import InputWithIconPass from "../components/common/input-box/InputWithIconPass";
 import svgExports from "../assets/svg/exports";
 import PrimaryButton from "../components/common/button/PrimaryButton";
+import { Link } from "react-router-dom";
+import generalLoginContext from "../context/authentication/generalLoginContext";
+import { signin } from "../apis/post.api";
 
 const LoginPage = () => {
+  const { login, updateLogin, updateAuthenticator } =
+    useContext(generalLoginContext);
+
+  function handleSignin(event) {
+    event.preventDefault();
+
+    signin(login)
+      .then((data) => {
+        if (data.success && data.message.role !== 1) {
+          localStorage.setItem("token", data.token);
+          updateAuthenticator({
+            isLoggedIn: true,
+            role: data.message.role,
+            id: data.message.id,
+          });
+        } else {
+          updateAuthenticator({ isLoggedIn: false });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
   return (
     <div className="flex justify-center">
       <div className="w-[500px] h-screen p-8 bg-gray-50 rounded flex items-center">
@@ -15,16 +42,20 @@ const LoginPage = () => {
 
           <InputWithIcon
             id="signup-email"
+            name="email"
             label="Email or Username"
             icon={<svgExports.EmailIcon />}
             placeholder="arvinmalaluan@gmail.com"
+            set={updateLogin}
           />
 
           <InputWithIconPass
             id="signup-password"
+            name="password"
             label="Set Password"
             icon={<svgExports.PasswordIcon />}
             placeholder="D9RWpTAXinJN06G"
+            set={updateLogin}
           />
 
           <div className="flex items-center justify-between mt-2 mb-8">
@@ -53,16 +84,16 @@ const LoginPage = () => {
             </a>
           </div>
 
-          <PrimaryButton label="Submit" />
+          <PrimaryButton label="Submit" onclick={handleSignin} />
 
           <p className="mt-8 text-sm text-darkBackground-500">
             Does not have an account yet?{" "}
-            <a
-              href="/signup"
+            <Link
+              to="/signup"
               className="cursor-pointer hover:underline font-[500] hover:text-secondary-900"
             >
               Sign up
-            </a>
+            </Link>
           </p>
         </form>
       </div>

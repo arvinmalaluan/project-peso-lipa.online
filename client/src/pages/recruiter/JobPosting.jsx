@@ -4,6 +4,7 @@ import svgExports from "../../assets/svg/exports";
 import { ChevronUpNDown } from "../../assets/svg/recruiterIcons";
 import TableFooter from "../../components/common/table/TableFooter";
 import { dummy_jobpost } from "../../assets/dummy/dummy_jobpost";
+import { useNavigate } from "react-router-dom";
 
 const THeadWFilter = (props) => {
   return (
@@ -17,6 +18,8 @@ const THeadWFilter = (props) => {
 };
 
 const JobPosting = () => {
+  const navigate = useNavigate();
+
   function getSelected() {
     const checkboxes = document.querySelectorAll("#tbl-checkboxes");
     const selected_count = document.querySelector("#total-selected");
@@ -48,6 +51,10 @@ const JobPosting = () => {
     getSelected();
   }
 
+  function newPost() {
+    navigate("/recruiter/new-post");
+  }
+
   const tempData = dummy_jobpost;
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(10);
@@ -74,7 +81,10 @@ const JobPosting = () => {
                 className="px-4 h-8 text-sm border border-gray-300 w-[300px] rounded"
               />
 
-              <button className="h-8 gap-2 px-4 text-sm border border-gray-300 rounded">
+              <button
+                className="h-8 gap-2 px-4 text-sm border border-gray-300 rounded"
+                onClick={newPost}
+              >
                 New Post
               </button>
               <button className="flex items-center h-8 gap-2 px-4 text-sm border border-gray-300 rounded">

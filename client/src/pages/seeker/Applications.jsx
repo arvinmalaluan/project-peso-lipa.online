@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SideNav from "../../components/SideNav";
 import svgExports from "../../assets/svg/exports";
 import { hideSideMenu, showSideMenu } from "../../utils/functions";
+import { SearchNav } from "../../components/common/SearchNav";
 
 const Applications = () => {
   let [shown, setShown] = useState(false);
@@ -34,47 +35,18 @@ const Applications = () => {
 
       <div className="w-full h-full overflow-y-scroll">
         <div className="m-w-[1240px] flex flex-col gap-4 h-auto px-0  m-auto">
-          <div
-            className={
-              shown
-                ? "flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 bg-white border-b"
-                : "sticky top-0 z-10 flex items-center justify-between w-full col-span-12 px-4 sm:px-8 py-3 bg-white border-b"
-            }
-          >
-            <button
-              className="w-8 h-8 p-1 text-white rounded lg:hidden no-border bg-secondary-900"
-              onClick={onOpen}
-            >
-              <svgExports.BurgerIcon />
-            </button>
-
-            <input
-              type="text"
-              className="hidden w-2/4 px-4 py-2 text-xs border rounded-full outline-none lg:block w-100"
-              placeholder="Search here"
-            />
-
-            <div className="flex gap-2">
-              <input
-                type="text"
-                className="px-4 py-2 text-xs border rounded-full outline-none lg:hidden w-100"
-                placeholder="Search here"
-              />
-              <div className="w-8 h-8 rounded-full bg-gray-50"></div>
-              <div className="w-8 h-8 rounded-full bg-gray-50"></div>
-            </div>
-          </div>
+          <SearchNav onOpen={onOpen} shown={shown} />
 
           <div className="px-4 sm:px-8">
             <p className="text-sm font-semibold">Showing 45 Applications</p>
             <p className="text-xs text-gray-500">Best of luck applicant!</p>
           </div>
 
-          <div className="flex items-center justify-between px-4 sm:px-8">
+          <div className="flex items-center justify-between gap-2 px-4 sm:px-8">
             <div className="w-full">
               <input
                 type="text"
-                className="px-4 py-2 text-xs rounded w-[35%] bg-gray-50"
+                className="px-4 py-2 text-xs rounded sm:w-[35%] w-full bg-gray-50"
                 placeholder="Search here"
               />
             </div>

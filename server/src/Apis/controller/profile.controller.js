@@ -3,7 +3,7 @@ const services = require("../services/sql.services");
 const errorHandling = require("../../Helpers/errorHandling");
 
 module.exports = {
-  createProfile: (req, res) => {
+  create: (req, res) => {
     try {
       const format_values = {
         name: req.body.name,
@@ -40,10 +40,59 @@ module.exports = {
           });
         }
       });
-    } catch {
-      return res.status(200).json({
-        payload: query_variables,
+    } catch (e) {
+      return res.status(500).json({
+        error: e,
       });
     }
+  },
+
+  get: (req, res) => {
+    try {
+      const query_variables = {
+        fields: "*",
+        table_name: "tbl_profile",
+        condition: `fkid_account = ${req.params.id}`,
+      };
+
+      services.get_w_condition(query_variables, (error, results) => {
+        errorHandling.check_results(res, error, results);
+
+        if (results.length !== 0) {
+          return res.status(201).json({
+            success: 1,
+            message: "User profile found",
+            results: results,
+          });
+        }
+      });
+    } catch (e) {
+      return res.status(200).json({
+        error: e,
+      });
+    }
+  },
+
+  update: (req, res) => {
+    const query_variables = {
+      values: textFormatter.formatUpdate(
+        Object.keys(req.body),
+        Object.values(req.body)
+      ),
+      table_name: "tbl_profile",
+      condition: `fkid_account = ${req.params.id}`,
+    };
+
+    services.patch_using_condition(query_variables, (error, results) => {
+      errorHandling.check_results(res, error, results);
+
+      if (results.length !== 0) {
+        return res.status(200).json({
+          success: 1,
+          message: "Updated Successfully",
+          results: results,
+        });
+      }
+    });
   },
 };

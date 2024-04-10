@@ -13,12 +13,10 @@ module.exports = {
         email: req.body.email,
         password: await userAuth.hashing(req.body.password),
         fkid_role: req.body.fkid_role,
-        recovery_email: req.body.recovery_email,
-        username: req.body.username,
       };
 
       const query_variables = {
-        fields: "email, password, fkid_role, recovery_email, username",
+        fields: "email, password, fkid_role",
         table_name: "tbl_account",
         values: textFormatter
           .parseValues(Object.values(format_values))
@@ -70,7 +68,7 @@ module.exports = {
               const username = req.body.email;
               const user = {
                 name: username,
-                role: results[0].role_fkid,
+                role: results[0].fkid_role,
                 id: results[0].id,
               };
               const access_token = jwt.sign(

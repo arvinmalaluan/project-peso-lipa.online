@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import svgExports from "../assets/svg/exports";
 import InputWithIconPass from "../components/common/input-box/InputWithIconPass";
 import InputWithIcon from "../components/common/input-box/InputWithIcon";
 import PrimaryButton from "../components/common/button/PrimaryButton";
+import { Link } from "react-router-dom";
+import generalRegisterContext from "../context/authentication/generalRegisterContext";
+import { signup } from "../apis/post.api";
+
+import { useNavigate } from "react-router-dom";
 
 function RadioList(props) {
   return (
@@ -28,8 +33,11 @@ function RadioList(props) {
 }
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [visible, setVisible] = useState(0);
   const [role, setRole] = useState(null);
+  const { register, updateRegister } = useContext(generalRegisterContext);
 
   function changeVisibility(value) {
     if (value === 1) {
@@ -39,6 +47,7 @@ const Register = () => {
         ).value;
 
         setRole(role);
+        updateRegister({ role: role });
         setVisible(value);
       } catch (e) {
         alert("please select role");
@@ -47,6 +56,30 @@ const Register = () => {
 
     if (value === 0) {
       setVisible(0);
+    }
+  }
+
+  function registerUser(event) {
+    event.preventDefault();
+
+    const payload = {
+      email: register.email,
+      password: register.password,
+      fkid_role: register.role,
+    };
+
+    if (register.password === register.confirm_password) {
+      signup(payload)
+        .then((data) => {
+          if (data.success) {
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      console.log("not matched");
     }
   }
 
@@ -68,7 +101,7 @@ const Register = () => {
               <p className="absolute text-sm opacity-50 top-5">
                 Selected Role:{" "}
                 <span className="font-semibold">
-                  {role == 3 ? "Job Seeker" : "Job Recruiter"}
+                  {role == 2 ? "Job Seeker" : "Job Recruiter"}
                 </span>
               </p>
 
@@ -78,6 +111,8 @@ const Register = () => {
                   label="Active Email"
                   icon={<svgExports.EmailIcon />}
                   placeholder="arvinmalaluan@gmail.com"
+                  name="email"
+                  set={updateRegister}
                 />
 
                 <InputWithIconPass
@@ -85,6 +120,8 @@ const Register = () => {
                   label="Set Password"
                   icon={<svgExports.PasswordIcon />}
                   placeholder="D9RWpTAXinJN06G"
+                  name="password"
+                  set={updateRegister}
                 />
 
                 <InputWithIconPass
@@ -92,6 +129,8 @@ const Register = () => {
                   label="Confirm Password"
                   icon={<svgExports.PasswordIcon />}
                   placeholder="D9RWpTAXinJN06G"
+                  name="confirm_password"
+                  set={updateRegister}
                 />
 
                 <div className="flex items-start mb-6">
@@ -119,7 +158,7 @@ const Register = () => {
                   </label>
                 </div>
 
-                <PrimaryButton label="Sign up" />
+                <PrimaryButton label="Sign up" onclick={registerUser} />
               </form>
             </div>
           ) : (
@@ -132,30 +171,51 @@ const Register = () => {
                   type="Job Recruiter"
                   caption="Are you here to find potential candidates for job vacancies?"
                   id="recruiter-option"
-                  value="2"
+                  value="3"
                 />
                 <RadioList
                   type="Job Seeker"
                   caption="Are you here to find your dream job or find the perfect job for you?"
                   id="seeker-option"
-                  value="3"
+                  value="2"
                 />
               </ul>
 
-              <PrimaryButton label="Next" onclick={changeVisibility} />
+              <button
+                className="w-full py-2 mt-4 text-white rounded bg-secondary-900"
+                onClick={() => changeVisibility(1)}
+              >
+                Next
+              </button>
             </div>
           )}
         </div>
 
         <p className="mt-10 text-sm text-darkBackground-500 ">
           Already have an account?{" "}
-          <a
-            href="/"
-            className="font-semibold hover:text-secondary-900 hover:underline"
+          <Link
+            to="/"
+            className="cursor-pointer hover:underline font-[500] hover:text-secondary-900"
           >
             Sign in
-          </a>
+          </Link>
         </p>
+
+        <div className="flex gap-4 mt-8 text-sm">
+          <Link
+            to="/dashboard"
+            className="cursor-pointer hover:underline font-[500] hover:text-secondary-900"
+          >
+            Go to recruiters
+          </Link>
+
+          <Link
+            to="/home"
+            className="cursor-pointer hover:underline font-[500] hover:text-secondary-900"
+          >
+            Go to seekers
+          </Link>
+        </div>
       </div>
     </div>
   );

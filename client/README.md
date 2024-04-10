@@ -1,7 +1,8 @@
-## Client Side Configuration
+# React + Vite
 
-<p><span><b>What does client side configuration means?</b><br/></span>Client-side configuration is like customizing your own workspace or tools. Just like you arrange your desk, choose your favorite pen, or adjust your chair for comfort, client-side configuration lets you personalize how you interact with software or websites. It's about setting things up just the way you like them, making your digital experience more tailored to your needs and preferences.
-</p>
-<br />
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-<b>Tech Stack</b>
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

@@ -51,3 +51,7 @@
 .logo-height {
   height: 40px;
 }
+
+.text-muted {
+  color: #6c757d; /* Default muted text color */
+}
