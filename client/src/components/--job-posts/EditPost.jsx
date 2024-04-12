@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import SideNavRecru from "../SideNavRecru";
 import InputWithNoIcon from "../common/input-box/InputWithNoIcon";
 import DatePicker from "../common/input-box/DatePicker";
@@ -8,12 +8,15 @@ import svgExports from "../../assets/svg/exports";
 import { Link, useNavigate } from "react-router-dom";
 import authenticatedContext from "../../context/authentication/authenticatedContext";
 import { createJobPostFetch } from "../../apis/post.api";
+import { useParams } from "react-router-dom";
+import { getSpecificJobPosts } from "../../apis/get.api";
+import { updateFetch } from "../../apis/patch.api";
 
-const NewPost = () => {
+const EditPost = () => {
   const { profile } = useContext(authenticatedContext);
   const navigate = useNavigate();
 
-  const [newPost, updateNewPost] = useReducer(
+  const [editPost, updateEditPost] = useReducer(
     (prev, next) => {
       const newEvent = { ...prev, ...next };
 
@@ -37,27 +40,41 @@ const NewPost = () => {
     }
   );
 
-  function createPost(event) {
+  function updatePost(event) {
     event.preventDefault();
 
-    if (profile.id) {
-      createJobPostFetch(newPost)
-        .then((data) => {
-          if (data.success) {
-            alert("success");
-            navigate("/recruiter/job-posting");
-          } else {
-            alert("error");
-            navigate("/recruiter/job-posting");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    } else {
-      alert("set up profile first");
-    }
+    const url_ext = `jobpost/patch/${editPost.id}`;
+
+    updateFetch(editPost, url_ext)
+      .then((data) => {
+        if (data.success) {
+          alert("success");
+          navigate("/recruiter/job-posting");
+        } else {
+          alert("error");
+          navigate("/recruiter/job-posting");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+    console.log(editPost);
   }
+
+  const { id, fk } = useParams();
+
+  useEffect(() => {
+    getSpecificJobPosts(id)
+      .then((data) => {
+        if (data.success && data.results[0].fkid_profile == fk) {
+          updateEditPost(data.results[0]);
+        }
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  }, []);
 
   return (
     <div className="flex w-full h-screen">
@@ -88,13 +105,14 @@ const NewPost = () => {
               placeholder="e.g. UI/UX Designer"
               is_required={true}
               name="job_title"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <Select
               name="employment_type"
-              onchange={updateNewPost}
-              datum={newPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <InputWithNoIcon
@@ -103,7 +121,8 @@ const NewPost = () => {
               placeholder="e.g. Remote"
               is_required={true}
               name="location"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <InputWithNoIcon
@@ -112,7 +131,8 @@ const NewPost = () => {
               placeholder="e.g. 2 years of experience in UI/UX Design"
               is_required={true}
               name="required_experience"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <InputWithNoIcon
@@ -121,7 +141,8 @@ const NewPost = () => {
               placeholder="e.g. Bachelor's Degree"
               is_required={true}
               name="required_education"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <TextArea
@@ -130,7 +151,8 @@ const NewPost = () => {
               placeholder="e.g. In a UI/UX design role, responsibilities encompass creating intuitive interfaces, conducting user research, and collaborating with cross-functional teams. Designers develop wireframes, prototypes, and design specifications while ensuring consistency and adherence to design principles. They iterate on designs based on feedback, stay updated with industry trends, and may contribute to front-end development efforts. The role offers the chance to craft user-friendly experiences, engage in creative problem-solving, and enjoy flexible work arrangements."
               rows={10}
               name="job_description"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <InputWithNoIcon
@@ -139,7 +161,8 @@ const NewPost = () => {
               placeholder="e.g. contact_hr@gmail.com"
               is_required={true}
               name="email_address"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <DatePicker
@@ -147,8 +170,8 @@ const NewPost = () => {
               id="deadline"
               is_required={true}
               name="application_deadline"
-              onchange={updateNewPost}
-              datum={newPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <TextArea
@@ -157,7 +180,8 @@ const NewPost = () => {
               placeholder="e.g. Candidates for UI/UX design positions need technical proficiency in design tools like Adobe XD or Figma, along with a deep understanding of design principles. They must excel in user research to gather insights and possess strong communication skills for collaboration and presenting ideas. Creativity and innovation are essential for crafting user-centered designs that meet business objectives. A portfolio showcasing relevant projects is crucial to demonstrate their capabilities. Additionally, familiarity with front-end development and domain-specific knowledge can be advantageous."
               rows={10}
               name="required_skills"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <TextArea
@@ -166,7 +190,8 @@ const NewPost = () => {
               placeholder="e.g. Candidates for UI/UX design roles typically need a relevant bachelor's degree or equivalent experience, proficiency in design tools like Adobe XD or Figma, a strong understanding of design principles, and excellent communication skills. Optional qualifications may include front-end development knowledge and domain-specific understanding. Creativity, problem-solving abilities, and a commitment to continuous learning are also essential."
               rows={10}
               name="qualifications"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <TextArea
@@ -175,7 +200,8 @@ const NewPost = () => {
               placeholder="e.g. In a UI/UX design role, responsibilities include crafting user-friendly interfaces, conducting user research, and collaborating with teams. Designers create wireframes, prototypes, and specifications, iterate based on feedback, and stay updated with industry trends. They may also assist in front-end development to ensure the final product meets user experience goals."
               rows={10}
               name="responsibilities"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <TextArea
@@ -184,7 +210,8 @@ const NewPost = () => {
               placeholder="e.g. In a UI/UX design role, benefits include the opportunity to contribute to user-friendly products, engage in creative problem-solving, and collaborate with diverse teams. Designers often enjoy flexible work arrangements and opportunities for professional growth. Additionally, they get to see their designs come to life and positively impact user experiences."
               rows={10}
               name="benefits"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <InputWithNoIcon
@@ -193,7 +220,8 @@ const NewPost = () => {
               placeholder="e.g. 1000/day"
               is_required={true}
               name="salary"
-              onchange={updateNewPost}
+              onchange={updateEditPost}
+              datum={editPost}
             />
 
             <div className="flex justify-end gap-4 pt-4 pb-8">
@@ -202,9 +230,9 @@ const NewPost = () => {
               </button>
               <button
                 className="px-4 py-2 text-sm text-white rounded bg-secondary-900"
-                onClick={createPost}
+                onClick={updatePost}
               >
-                Create Job Post
+                Update Job Post
               </button>
             </div>
           </form>
@@ -214,4 +242,4 @@ const NewPost = () => {
   );
 };
 
-export default NewPost;
+export default EditPost;

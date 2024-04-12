@@ -29,6 +29,7 @@ import AuthenticatedContextProvider from "./context/authentication/authenticated
 import { useContext, useEffect } from "react";
 import generalLoginContext from "./context/authentication/generalLoginContext";
 import { decodeJWT } from "./utils/function";
+import EditPost from "./components/--job-posts/EditPost";
 
 function App() {
   const { authenticator, updateAuthenticator } =
@@ -72,6 +73,9 @@ function App() {
             <Route path="/" element={<R_Home />} />
             <Route path="/recruiter/job-posting" element={<JobPosting />} />
             <Route path="/recruiter/new-post" element={<NewPost />} />
+            <Route path="/recruiter/edit-post" element={<EditPost />}>
+              <Route path=":id/:fk/" element={<EditPost />} />
+            </Route>
             <Route path="/recruiter/profile" element={<RProfile />} />
             <Route
               path="/recruiter/settings"

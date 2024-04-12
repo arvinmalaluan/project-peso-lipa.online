@@ -1,6 +1,10 @@
 import React from "react";
 
-const Select = () => {
+const Select = (props) => {
+  function handleChange(event) {
+    props.onchange({ [props.name]: event.target.value });
+  }
+
   return (
     <div className="mb-5 ">
       <label
@@ -12,19 +16,24 @@ const Select = () => {
       <div className="block w-full pr-2 overflow-hidden border border-gray-300 rounded bg-gray-50">
         <select
           id="countries"
-          className="text-gray-400 text-sm w-full h-full  p-2.5 bg-transparent outline-none"
-          defaultValue={"-1"}
+          className={`text-sm w-full h-full  p-2.5 bg-transparent outline-none ${
+            props.datum.employment_type === ""
+              ? "text-gray-400"
+              : "text-gray-900"
+          }`}
+          value={props.datum[props.name] ? props.datum[props.name] : "-1"}
+          onChange={handleChange}
         >
           <option value="-1" className="hidden">
             e.g. Full-time
           </option>
-          <option>Full-time</option>
-          <option value="US">Part-time</option>
-          <option value="CA">Internship</option>
-          <option value="FR">Freelance</option>
-          <option value="DE">Contract Employment</option>
-          <option value="DE">Temporary Employment</option>
-          <option value="DE">Remote Employment</option>
+          <option value="full-time">Full-time</option>
+          <option value="part-time">Part-time</option>
+          <option value="internship">Internship</option>
+          <option value="freelance">Freelance</option>
+          <option value="contract-employment">Contract Employment</option>
+          <option value="temporary-employment">Temporary Employment</option>
+          <option value="remote-employment">Remote Employment</option>
         </select>
       </div>
     </div>

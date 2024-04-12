@@ -45,11 +45,85 @@ module.exports = {
     });
   },
 
-  get: (req, res) => {},
+  get: (req, res) => {
+    const query_variables = {
+      fields: "*",
+      table_name: "tbl_job_postings",
+    };
 
-  get_using_id: (req, res) => {},
+    services.get_all(query_variables, (error, results) => {
+      errorHandling.check_results(res, error, results);
 
-  get_using_fk: (req, res) => {},
+      if (results.length !== 0) {
+        return res.status(201).json({
+          success: 1,
+          message: "Created Successfully",
+          results: results,
+        });
+      }
+    });
+  },
 
-  patch: (req, res) => {},
+  get_using_id: (req, res) => {
+    const query_variables = {
+      fields: "*",
+      table_name: "tbl_job_postings",
+      id: req.params.id,
+    };
+
+    services.get_id(query_variables, (error, results) => {
+      errorHandling.check_results(res, error, results);
+
+      if (results.length !== 0) {
+        return res.status(201).json({
+          success: 1,
+          message: "Created Successfully",
+          results: results,
+        });
+      }
+    });
+  },
+
+  get_using_fk: (req, res) => {
+    const query_variables = {
+      fields: "*",
+      table_name: "tbl_job_postings",
+      condition: `fkid_profile = ${req.params.fk}`,
+    };
+
+    services.get_w_condition(query_variables, (error, results) => {
+      errorHandling.check_results(res, error, results);
+
+      if (results.length !== 0) {
+        return res.status(201).json({
+          success: 1,
+          message: "Results found",
+          results: results,
+        });
+      }
+    });
+  },
+
+  patch: (req, res) => {
+    const query_variables = {
+      values: textFormatter.formatUpdate(
+        Object.keys(req.body),
+        Object.values(req.body)
+      ),
+      table_name: "tbl_job_postings",
+      id: req.params.id,
+    };
+
+    services.patch_(query_variables, (error, results) => {
+      errorHandling.check_results(res, error, results);
+
+      if (results.length !== 0) {
+        return res.status(200).json({
+          success: 1,
+          message: "Updated Successfully",
+          results: results,
+        });
+      }
+    });
+  },
 };

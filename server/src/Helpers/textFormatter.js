@@ -18,7 +18,7 @@ module.exports = {
 
     if (keys.length === values.length) {
       keys.map((key, index) => {
-        empty_array.push(`${key} = '${values[index]}'`);
+        empty_array.push(`${key} = "${values[index]}"`);
       });
     } else {
       return "error";

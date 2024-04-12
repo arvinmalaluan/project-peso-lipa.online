@@ -31,7 +31,6 @@ const authenticatedContextProvider = ({ children }) => {
     try {
       getProfile(authenticator.id)
         .then((data) => {
-          console.log(data);
           if (data.success) {
             updateProfile(data.results[0]);
             setProfFound(true);
