@@ -1,2 +1,2 @@
-# project-peso-lipa.online
+# PROJECT PESO-LIPA.Online
 Capstone Project
