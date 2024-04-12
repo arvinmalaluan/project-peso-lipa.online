@@ -2,12 +2,13 @@ import React, { useContext } from "react";
 import { FormatProfileText, FormatText, TextWithIcon, } from "./__sub_components"; // prettier-ignore
 import svgExports from "../../assets/svg/exports";
 import seekerHomeContext from "../../context/seekerHomeContext";
+import { useNavigate } from "react-router-dom";
 
 export const AboutTheJob = (props) => {
   return (
     <>
-      <p className="mb-2 font-semibold">About the job</p>
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <p className="mb-2 text-2xl font-semibold">About the job</p>
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         <FormatText label="Job Title" data={props.job_data.job_title} />
         {/* prettier-ignore */}
         <FormatText label="Employment type" data={props.job_data.employment_type} />
@@ -19,9 +20,10 @@ export const AboutTheJob = (props) => {
         <FormatText label="Application Deadline" data={props.job_data.application_deadline} />
         {/* prettier-ignore */}
         <FormatText label="Contact Email" data={props.job_data.email_address} />
+        <FormatText label="Location" data={props.job_data.location} />
       </div>
 
-      <p className="mt-8 mb-2 font-semibold">More information</p>
+      <p className="mt-8 mb-2 text-2xl font-semibold">More information</p>
       <div className="mt-2">
         {/* prettier-ignore */}
         <TextWithIcon label="Job Description" data={props.job_data.job_description} />
@@ -67,10 +69,10 @@ export const CompanyInformationTab = (props) => {
 };
 
 export const Cards = (props) => {
-  const { setActivePost } = useContext(seekerHomeContext);
+  const navigate = useNavigate();
 
   function openJobPost() {
-    setActivePost((prev) => props.data);
+    navigate(`/post/${props.data.id}`);
   }
 
   return (
@@ -89,7 +91,7 @@ export const Cards = (props) => {
 
       <div>
         <p className="mt-4 mb-2">Job Description</p>
-        <p className="text-xs text-gray-500 line-clamp-5">
+        <p className="text-xs text-gray-500 line-clamp-5 h-[80px]">
           {props.data.job_description}
         </p>
       </div>

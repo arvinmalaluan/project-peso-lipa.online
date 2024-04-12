@@ -47,3 +47,14 @@ CREATE TABLE tbl_job_postings (
     PRIMARY KEY (id),
     FOREIGN KEY (fkid_profile) REFERENCES tbl_profile(id)
 )
+
+CREATE TABLE tbl_applications(
+	id int not null AUTO_INCREMENT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status varchar(255) not null,
+    fkid_job_postings int not null,
+    fkid_profile int not null,
+    primary key(id),
+    FOREIGN key (fkid_job_postings) REFERENCES tbl_job_postings(id),
+    foreign key (fkid_profile) REFERENCES tbl_profile(id)
+)

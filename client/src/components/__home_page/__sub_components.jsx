@@ -1,8 +1,10 @@
 export const TextWithIcon = (props) => {
   return (
     <div className="flex flex-col items-start mb-6">
-      <p className="pb-1 mb-1 text-xs font-semibold border-b">{props.label}</p>
-      <p className="text-sm text-justify">{props.data}</p>
+      <p className="pb-1 pr-4 mb-3 font-semibold text-gray-700 border-b-2 border-primary-900">
+        {props.label}
+      </p>
+      <p className="text-sm text-justify text-gray-500">{props.data}</p>
     </div>
   );
 };
@@ -33,7 +35,7 @@ export const FormatProfileText = (props) => {
             : "text-sm line-clamp-1 "
         }`}
       >
-        {props.name}
+        {props.name ? props.name : "Not set"}
       </p>
     </div>
   );

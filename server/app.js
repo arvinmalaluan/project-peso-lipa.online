@@ -25,5 +25,6 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use("/api/v1/https/auth", routes.authRouter); // --------------> For Authentication Related Routes
 app.use("/api/v1/https/profile", routes.profileRouter); // --------> For Authentication Related Routes
 app.use("/api/v1/https/jobpost", routes.jobPostingsRouter); // ----> For Authentication Related Routes
+app.use("/api/v1/https/apply", routes.applicationRouter); // ------> For Authentication Related Routes
 
 module.exports = { server };

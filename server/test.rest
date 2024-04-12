@@ -58,4 +58,9 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/v1/https/jobpost/get
+PATCH http://localhost:3000/api/v1/https/apply/1
+Content-Type: application/json
+
+{
+    "status": "reference-checked"
+}

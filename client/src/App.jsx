@@ -30,6 +30,7 @@ import { useContext, useEffect } from "react";
 import generalLoginContext from "./context/authentication/generalLoginContext";
 import { decodeJWT } from "./utils/function";
 import EditPost from "./components/--job-posts/EditPost";
+import ViewJobPost from "./pages/seeker/ViewJobPost";
 
 function App() {
   const { authenticator, updateAuthenticator } =
@@ -53,7 +54,11 @@ function App() {
         <AuthenticatedContextProvider>
           <Routes>
             {/* prettier-ignore */}
-            <Route path="/" element={ <SeekerHomeContextProvider><HomePage /></SeekerHomeContextProvider> } />
+            <Route path="/" element={ <SeekerHomeContextProvider><HomePage /></SeekerHomeContextProvider> }>
+            </Route>
+            <Route path="/post">
+              <Route path=":id" element={<ViewJobPost />} />
+            </Route>
 
             {/* prettier-ignore */}
             <Route path="/search-jobs" element={ <SeekerSearchJobContextProvider><SearchJobs /></SeekerSearchJobContextProvider> } />
