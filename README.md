@@ -1,2 +1,4 @@
 # PROJECT PESO-LIPA.Online
-Capstone Project
+
+#### Description
+This is a capstone project intended to cater the needs of PESO Agency located at Lipa City, Batangas.
