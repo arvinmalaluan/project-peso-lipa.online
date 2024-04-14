@@ -46,12 +46,9 @@ module.exports = {
   },
 
   get: (req, res) => {
-    const query_variables = {
-      fields: "*",
-      table_name: "tbl_job_postings",
-    };
+    const query_variables = {};
 
-    services.get_all(query_variables, (error, results) => {
+    services.get_all_jobpost_w_profile(query_variables, (error, results) => {
       errorHandling.check_results(res, error, results);
 
       if (results.length !== 0) {

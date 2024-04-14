@@ -58,3 +58,58 @@ CREATE TABLE tbl_applications(
     FOREIGN key (fkid_job_postings) REFERENCES tbl_job_postings(id),
     foreign key (fkid_profile) REFERENCES tbl_profile(id)
 )
+
+create table tbl_documents (
+	id int not null AUTO_INCREMENT,
+    tor longtext null,
+    psi longtext null,
+    nbi longtext null,
+    fkid_profile int,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    primary key (id),
+    foreign key (fkid_profile) references tbl_profile(id)
+)
+
+create table tbl_resume (
+	id int not null AUTO_INCREMENT,
+    resume_name varchar(255) not null,
+    fullname varchar(255) not null,
+    contact_number varchar(255) not null,
+    email_address varchar(255) not null,
+    resume_objective text not null,
+    tertiary_degree varchar(255),
+    tertiary_institution varchar(255),
+    tertiary_year_grad varchar(255),
+    tertiary_achievements varchar(255),
+    secondary_institution varchar(255),
+    secondary_year_grad varchar(255),
+    secondary_achievements varchar(255),
+    primary_institution varchar(255),
+    primary_year_grad varchar(255),
+    primary_achievements varchar(255),
+    language text,
+    language_proficiency text,
+    hobbies_interest text,
+    skills text not null,
+    skills_proficiency text not null,
+    ar_reward_name text not null,
+    ar_year_received text not null,
+    ar_issuer text not null,
+    ar_reward_description text not null,
+    project_title text not null,
+    project_year text not null,
+    project_desc text not null,
+    we_job_title text not null,
+    we_start_date text not null,
+    we_end_date text not null,
+    we_notable_achievement text not null,
+    reference_name text not null,
+    reference_relationship_to_you text not null,
+    reference_institution text not null,
+    reference_contact_info text not null,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    on_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    fkid_profile int,
+    primary key (id),
+    foreign key (fkid_profile) references tbl_profile(id)
+)

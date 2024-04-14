@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SideNav from "../../components/SideNav";
 import svgExports from "../../assets/svg/exports";
 import { hideSideMenu, showSideMenu } from "../../utils/functions";
 import { SearchNav } from "../../components/common/SearchNav";
+import default_image from "../../assets/images/default_image.png";
+import authenticatedContext from "../../context/authentication/authenticatedContext";
+import { getFetch } from "../../apis/get.api";
 
 const Applications = () => {
   let [shown, setShown] = useState(false);
+  const [applications, setApplications] = useState(null);
+
+  const { profile } = useContext(authenticatedContext);
 
   function onOpen() {
     showSideMenu();
@@ -16,6 +22,20 @@ const Applications = () => {
     hideSideMenu();
     setShown(false);
   }
+
+  useEffect(() => {
+    if (profile.id) {
+      const url_ext = `apply/all/${profile.id}`;
+
+      getFetch(url_ext)
+        .then((data) => {
+          setApplications(data.results);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [profile.id]);
 
   return (
     <div className="flex w-screen h-screen">
@@ -84,44 +104,60 @@ const Applications = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-white dark:bg-gray-800">
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      #APL-001
-                    </th>
-                    <td className="px-6 py-4">12:24:01 12/12/12</td>
-                    <td className="px-6 py-4">
-                      <div className="flex-shrink-0 block group">
-                        <div className="flex items-center">
-                          <img
-                            className="inline-block flex-shrink-0 size-[32px] rounded-full"
-                            src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                            alt="Image Description"
-                          />
-                          <div className="ms-3">
-                            <h3 className="font-[500] text-sm text-gray-800 dark:text-white">
-                              Sample Company, Inc.
-                            </h3>
-                            <p className="text-xs font-medium text-gray-400">
-                              View Profile
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div>Fulltime</div>
-                    </td>
-                    <td className="px-6 py-4">UI/UX Designer</td>
-                    <td className="px-6 py-4">Pending</td>
-                    <td className="px-6 py-4">
-                      <button className="size-[18px]">
-                        <svgExports.MoreButton />
-                      </button>
-                    </td>
-                  </tr>
+                  {applications ? (
+                    <>
+                      {applications.map((value, index) => {
+                        return (
+                          <tr className="bg-white dark:bg-gray-800" key={index}>
+                            <th
+                              scope="row"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              {`#APPL-${value.application_id}`}
+                            </th>
+                            <td className="px-6 py-4">{value.date_applied}</td>
+                            <td className="px-6 py-4">
+                              <div className="flex-shrink-0 block group">
+                                <div className="flex items-center">
+                                  <img
+                                    className="inline-block flex-shrink-0 size-[32px] rounded-full"
+                                    src={
+                                      value.company_profile
+                                        ? company_profile
+                                        : default_image
+                                    }
+                                    alt="Image Description"
+                                  />
+                                  <div className="ms-3">
+                                    <h3 className="font-[500] text-sm text-gray-800 dark:text-white">
+                                      {value.company_name}
+                                    </h3>
+                                    <p className="text-xs font-medium text-gray-400">
+                                      View Profile
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div>{value.type}</div>
+                            </td>
+                            <td className="px-6 py-4">{value.position}</td>
+                            <td className="px-6 py-4">{value.status}</td>
+                            <td className="px-6 py-4">
+                              <button className="size-[18px]">
+                                <svgExports.MoreButton />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <tr>
+                      <td colSpan={7}>No Records Found</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

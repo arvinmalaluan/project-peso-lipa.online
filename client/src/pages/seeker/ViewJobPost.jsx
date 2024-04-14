@@ -6,13 +6,18 @@ import { hideSideMenu, showSideMenu } from "../../utils/functions";
 import { SearchNav } from "../../components/common/SearchNav";
 import { useParams } from "react-router-dom";
 import { getSpecificJobPosts } from "../../apis/get.api";
+import { createFetch } from "../../apis/post.api";
+import { deleteFetch } from "../../apis/delete.api";
+import authenticatedContext from "../../context/authentication/authenticatedContext";
 
 const ViewJobPost = (props) => {
   const [moreInfo, setMoreInfo] = useState(false);
   const { id } = useParams();
+  const { profile } = useContext(authenticatedContext);
 
   let [shown, setShown] = useState(false);
   const [jobPosts, setJobPosts] = useState([]);
+  const [applied, setApplied] = useState(false);
 
   function onOpen() {
     showSideMenu();
@@ -32,9 +37,36 @@ const ViewJobPost = (props) => {
     setMoreInfo((prev) => !prev);
   }
 
+  function sendApplication() {
+    const payload = {
+      fkid_profile: profile.id,
+      fkid_job_postings: id,
+    };
+    const url_ext = `apply`;
+
+    createFetch(payload, url_ext)
+      .then((data) => {
+        setApplied(true);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  function cancelApplication() {
+    const url_ext = `apply/${jobPosts.application_id}`;
+
+    deleteFetch(url_ext)
+      .then((data) => {
+        setApplied(false);
+      })
+      .catch((error) => console.log(error));
+  }
+
   useEffect(() => {
     getSpecificJobPosts(id)
-      .then((data) => setJobPosts((prev) => data.results[0]))
+      .then((data) => {
+        setJobPosts((prev) => data.results[0]);
+        data.results[0].application_status !== null && setApplied(true);
+      })
       .catch((error) => console.log(error));
   }, []);
 
@@ -98,9 +130,22 @@ const ViewJobPost = (props) => {
                   ) : (
                     <div>
                       <AboutTheJob job_data={jobPosts} />
-                      <button className="px-4 py-2 mt-8 text-sm text-white rounded-full bg-secondary-800 hover:bg-secondary-900">
-                        Send Application
-                      </button>
+
+                      {applied ? (
+                        <button
+                          className="px-4 py-2 mt-8 text-sm text-white rounded-full bg-primary-800 hover:bg-primary-900"
+                          onClick={cancelApplication}
+                        >
+                          Cancel Application
+                        </button>
+                      ) : (
+                        <button
+                          className="px-4 py-2 mt-8 text-sm text-white rounded-full bg-secondary-800 hover:bg-secondary-900"
+                          onClick={sendApplication}
+                        >
+                          Send Application
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
@@ -108,9 +153,21 @@ const ViewJobPost = (props) => {
                 <div className="hidden md:block">
                   <AboutTheJob job_data={jobPosts} />
 
-                  <button className="px-4 py-2 mt-8 text-sm text-white rounded-full bg-secondary-800 hover:bg-secondary-900">
-                    Send Application
-                  </button>
+                  {applied ? (
+                    <button
+                      className="px-4 py-2 mt-8 text-sm text-white rounded-full bg-primary-800 hover:bg-primary-900"
+                      onClick={cancelApplication}
+                    >
+                      Cancel Application
+                    </button>
+                  ) : (
+                    <button
+                      className="px-4 py-2 mt-8 text-sm text-white rounded-full bg-secondary-800 hover:bg-secondary-900"
+                      onClick={sendApplication}
+                    >
+                      Send Application
+                    </button>
+                  )}
                 </div>
               </div>
 

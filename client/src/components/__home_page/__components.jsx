@@ -82,7 +82,9 @@ export const Cards = (props) => {
     >
       <div className="flex justify-between">
         <div>
-          <p className="text-xs text-gray-500">Company Name</p>
+          <p className="text-xs text-gray-500">
+            {props.data.name ? props.data.name : "Loading ..."}
+          </p>
           <p className="font-[500]  line-clamp-1">{props.data.job_title}</p>
         </div>
 

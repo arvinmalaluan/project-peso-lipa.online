@@ -58,9 +58,48 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:3000/api/v1/https/apply/1
-Content-Type: application/json
+GET http://localhost:3000/api/v1/https/apply/all/2
+# Content-Type: application/json
 
-{
-    "status": "reference-checked"
-}
+# {
+#     "tor": "random_characters"
+# }
+
+# {
+#     "resume_name": "My First Resume",
+#     "fullname": "a",
+#     "contact_number": "a",
+#     "email_address": "a",
+#     "resume_objective": "a",
+#     "tertiary_degree": "a",
+#     "tertiary_institution": "a",
+#     "tertiary_year_grad": "a",
+#     "tertiary_achievements": "a",
+#     "secondary_institution": "a",
+#     "secondary_year_grad": "a",
+#     "secondary_achievements": "a",
+#     "primary_institution": "a",
+#     "primary_year_grad": "a",
+#     "primary_achievements": "a",
+#     "language": "a",
+#     "language_proficiency": "a",
+#     "hobbies_interest": "a",
+#     "skills": "a",
+#     "skills_proficiency": "a",
+#     "ar_reward_name": "a",
+#     "ar_year_received": "a",
+#     "ar_issuer": "a",
+#     "ar_reward_description": "a",
+#     "project_title": "a",
+#     "project_year": "a",
+#     "project_desc": "a",
+#     "we_job_title": "a",
+#     "we_start_date": "a",
+#     "we_end_date": "a",
+#     "we_notable_achievement": "a",
+#     "reference_name": "a",
+#     "reference_relationship_to_you": "a",
+#     "reference_institution": "a",
+#     "reference_contact_info": "a",
+#     "fkid_profile": 2
+# }

@@ -131,11 +131,93 @@ module.exports = {
                 tbl_job_postings.location,
                 tbl_job_postings.created_at,
                 tbl_job_postings.views,
+                tbl_job_postings.status,
+                tbl_applications.id as application_id,
+                tbl_applications.status as application_status
+        FROM tbl_profile
+        JOIN tbl_job_postings ON tbl_profile.id = tbl_job_postings.fkid_profile
+        LEFT JOIN tbl_applications ON tbl_applications.fkid_job_postings = tbl_job_postings.id
+        WHERE tbl_job_postings.id = ${query_variables.id};
+      `,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          return call_back(error);
+        }
+
+        return call_back(null, results);
+      }
+    );
+  },
+
+  get_all_jobpost_w_profile: (query_variables, call_back) => {
+    db_conn.query(
+      `
+        SELECT tbl_profile.image,
+                tbl_profile.name,
+                tbl_job_postings.id,
+                tbl_job_postings.job_title,
+                tbl_job_postings.employment_type,
+                tbl_job_postings.required_experience,
+                tbl_job_postings.required_education,
+                tbl_job_postings.job_description,
+                tbl_job_postings.email_address,
+                tbl_job_postings.application_deadline,
+                tbl_job_postings.required_skills,
+                tbl_job_postings.qualifications,
+                tbl_job_postings.responsibilities,
+                tbl_job_postings.benefits,
+                tbl_job_postings.salary,
+                tbl_job_postings.location,
+                tbl_job_postings.created_at,
+                tbl_job_postings.views,
                 tbl_job_postings.status
         FROM tbl_profile
         JOIN tbl_job_postings ON tbl_profile.id = tbl_job_postings.fkid_profile
-        WHERE tbl_job_postings.id = ${query_variables.id};
       `,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          return call_back(error);
+        }
+
+        return call_back(null, results);
+      }
+    );
+  },
+
+  get_all_my_documents: (query_variables, call_back) => {
+    db_conn.query(
+      `SELECT d.*, GROUP_CONCAT(CONCAT_WS('|', r.id, r.resume_name)) AS "resume_data"
+      FROM tbl_profile p
+      LEFT JOIN tbl_documents d ON p.id = d.fkid_profile
+      LEFT JOIN tbl_resume r ON p.id = r.fkid_profile
+      WHERE p.id = ${query_variables.id};`,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          return call_back(error);
+        }
+
+        return call_back(null, results);
+      }
+    );
+  },
+
+  get_all_my_applications: (query_variables, call_back) => {
+    db_conn.query(
+      `SELECT 
+        app.id as application_id, 
+        app.created_at as date_applied, 
+        prof.image as company_profile,
+        prof.name as company_name,
+        post.employment_type as type,
+        post.job_title as position,
+        app.status as status
+        FROM tbl_applications as app
+        JOIN tbl_job_postings as post ON post.id = app.fkid_job_postings
+        JOIN tbl_profile as prof ON prof.id = post.fkid_profile
+        WHERE app.fkid_profile = ${query_variables.fk};`,
       [],
       (error, results, fields) => {
         if (error) {

@@ -1,16 +1,39 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import SideNav from "../../components/SideNav";
 import tinyBlocks from "../../utils/tinyBlocks";
 import { hideSideMenu, showSideMenu } from "../../utils/functions";
 import { SearchNav } from "../../components/common/SearchNav";
-import { job_listings } from "../../components/__home_page/__dummy_data";
 import { Cards } from "../../components/__search_jobs/__components";
-import ViewJobPost from "./ViewJobPost";
-import seekerSearchJobContext from "../../context/seekerSearchJobContext";
+import { getAllJobPosts } from "../../apis/get.api";
 
 const SearchJobs = () => {
   let [shown, setShown] = useState(false);
-  const { activePost, setActivePost } = useContext(seekerSearchJobContext);
+  const [jobPosts, setJobPosts] = useState(null);
+  const [temporary, setTemporary] = useState([]);
+  const [search, updateSearch] = useReducer(
+    (prev, next) => {
+      const newEvent = { ...prev, ...next };
+
+      return newEvent;
+    },
+    {
+      keywords: null,
+      location: null,
+    }
+  );
+
+  useEffect(() => {
+    getAllJobPosts()
+      .then((data) => {
+        if (data.success) {
+          setJobPosts((prev) => data.results);
+          setTemporary((prev) => data.results);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   function onOpen() {
     showSideMenu();
@@ -20,6 +43,46 @@ const SearchJobs = () => {
   function onClose() {
     hideSideMenu();
     setShown(false);
+  }
+
+  function handleChange(event, name) {
+    updateSearch({ [name]: event.target.value });
+  }
+
+  function handleSearch() {
+    const copy = jobPosts;
+    let newc;
+
+    if (search.keywords !== null && search.location === null) {
+      newc = copy.filter((value, index) => {
+        return (
+          value.name.toLowerCase().includes(search.keywords.toLowerCase()) ||
+          value.job_title.toLowerCase().includes(search.keywords.toLowerCase())
+        );
+      });
+    }
+
+    if (search.keywords === null && search.location !== null) {
+      newc = copy.filter((value, index) => {
+        return value.location
+          .toLowerCase()
+          .includes(search.location.toLowerCase());
+      });
+    }
+
+    if (search.keywords !== null && search.location !== null) {
+      newc = copy.filter((value, index) => {
+        return (
+          value.name.toLowerCase().includes(search.keywords.toLowerCase()) ||
+          value.job_title
+            .toLowerCase()
+            .includes(search.keywords.toLowerCase()) ||
+          value.location.toLowerCase().includes(search.location.toLowerCase())
+        );
+      });
+    }
+
+    setTemporary((prev) => newc);
   }
 
   return (
@@ -43,75 +106,72 @@ const SearchJobs = () => {
           <div className="w-full ">
             <SearchNav onOpen={onOpen} shown={shown} />
 
-            {activePost ? (
-              <div className="p-4">
-                <ViewJobPost setActivePost={setActivePost} />
+            <div
+              id="reco-positions"
+              className="px-4 mt-6 sm:px-8 md:px-8 lg:px-8"
+            >
+              <p className="mb-2 text-sm font-semibold">
+                Recommended Positions
+              </p>
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-3">
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
+                <tinyBlocks.ThreeContentCard />
               </div>
-            ) : (
-              <>
-                <div
-                  id="reco-positions"
-                  className="px-4 mt-6 sm:px-8 md:px-8 lg:px-8"
-                >
-                  <p className="mb-2 text-sm font-semibold">
-                    Recommended Positions
-                  </p>
-                  <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-3">
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                    <tinyBlocks.ThreeContentCard />
-                  </div>
-                </div>
+            </div>
 
-                <div
-                  id="job-offers"
-                  className="px-4 pb-4 mt-6 sm:px-8 md:px-8 lg:px-8"
-                >
-                  <p className="text-sm font-semibold ">All Job Vacancies</p>
+            <div
+              id="job-offers"
+              className="px-4 pb-4 mt-6 sm:px-8 md:px-8 lg:px-8"
+            >
+              <p className="text-sm font-semibold ">All Job Vacancies</p>
 
-                  <div
-                    className={
-                      shown
-                        ? "pt-2 pb-2 bg-white px-4 md:px-0"
-                        : "sticky top-[57px] pt-2 pb-2 mb-2 bg-white sm:px-0 md:px-0"
-                    }
+              <div
+                className={
+                  shown
+                    ? "pt-2 pb-2 bg-white px-4 md:px-0"
+                    : "sticky top-[57px] pt-2 pb-2 mb-2 bg-white sm:px-0 md:px-0"
+                }
+              >
+                <div className="flex gap-2 overflow-hidden bg-whtie">
+                  <input
+                    type="text"
+                    placeholder="Job title, keywords or company"
+                    className="w-full px-4 py-2 text-xs bg-gray-100 rounded-full"
+                    onChange={(event) => handleChange(event, "keywords")}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Location"
+                    className="hidden w-full px-4 py-2 text-xs bg-gray-100 rounded-full sm:block"
+                    onChange={(event) => handleChange(event, "location")}
+                  />
+                  <button
+                    className="px-4 py-2 text-xs text-white bg-blue-500 rounded-full hover:bg-blue-700"
+                    onClick={handleSearch}
                   >
-                    <div className="flex gap-2 overflow-hidden bg-whtie">
-                      <input
-                        type="text"
-                        placeholder="Job title, keywords or company"
-                        className="w-full px-4 py-2 text-xs bg-gray-100 rounded-full"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Location"
-                        className="hidden w-full px-4 py-2 text-xs bg-gray-100 rounded-full sm:block"
-                      />
-                      <button className="px-4 py-2 text-xs text-white bg-blue-500 rounded-full hover:bg-blue-700">
-                        Search
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-1 xl:grid-cols-2">
-                    {job_listings.map((data, index) => {
-                      return (
-                        <div className="border rounded" key={index}>
-                          <Cards data={data} />
-                        </div>
-                      );
-                    })}
-                  </div>
+                    Search
+                  </button>
                 </div>
-              </>
-            )}
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-1 xl:grid-cols-2">
+                {temporary.map((data, index) => {
+                  return (
+                    <div className="border rounded" key={index}>
+                      <Cards data={data} />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <div className="w-[260px] py-4 ml-4 sticky top-0 h-screen hidden md:block">

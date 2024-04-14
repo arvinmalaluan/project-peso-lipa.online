@@ -90,6 +90,30 @@ module.exports = {
     }
   },
 
+  get_all_custom: (req, res) => {
+    try {
+      const query_variables = {
+        fk: req.params.fk,
+      };
+
+      services.get_all_my_applications(query_variables, (error, results) => {
+        errorHandling.check_results(res, error, results);
+
+        if (results.length !== 0) {
+          return res.status(201).json({
+            success: 1,
+            message: "User profile found",
+            results: results,
+          });
+        }
+      });
+    } catch (e) {
+      return res.status(200).json({
+        error: e,
+      });
+    }
+  },
+
   update: (req, res) => {
     const query_variables = {
       values: textFormatter.formatUpdate(
@@ -101,6 +125,25 @@ module.exports = {
     };
 
     services.patch_(query_variables, (error, results) => {
+      errorHandling.check_results(res, error, results);
+
+      if (results.length !== 0) {
+        return res.status(200).json({
+          success: 1,
+          message: "Updated Successfully",
+          results: results,
+        });
+      }
+    });
+  },
+
+  delete: (req, res) => {
+    const query_variables = {
+      table_name: "tbl_applications",
+      id: req.params.id,
+    };
+
+    services.delete_(query_variables, (error, results) => {
       errorHandling.check_results(res, error, results);
 
       if (results.length !== 0) {

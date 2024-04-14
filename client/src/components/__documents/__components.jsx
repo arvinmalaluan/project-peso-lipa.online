@@ -70,7 +70,7 @@ export const Content = (props) => {
               })}
 
               {props.textarea_content && (
-                <TextArea {...props.textarea_content} />
+                <TextArea index={first_index} {...props.textarea_content} />
               )}
 
               {resume[props.structures[0].name].length > 1 && props.add_new && (

@@ -37,9 +37,9 @@ export const TextArea = (props) => {
 
   function handleChange(event) {
     const new_value = event.target.value;
-
-    // updateResume({ [props.name]: new_value });
-    console.log(props.name);
+    const cloned_array = [...resume[props.name]];
+    cloned_array[props.index] = new_value;
+    updateResume({ [props.name]: cloned_array });
   }
 
   return (
@@ -48,7 +48,7 @@ export const TextArea = (props) => {
       rows={props.rows}
       placeholder={props.placeholder}
       className="w-full px-4 py-2 text-xs border rounded resize-none"
-      value={resume[props.name]}
+      value={resume[props.name][props.index]}
       onChange={handleChange}
       id=""
     />

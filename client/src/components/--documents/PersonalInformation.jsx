@@ -59,7 +59,7 @@ const PersonalInformation = () => {
         <button
           className="px-4 py-2 text-xs text-white bg-[#292929] border rounded"
           onClick={() => {
-            setPage(2), console.log(resume);
+            setPage(2);
           }}
         >
           Next
