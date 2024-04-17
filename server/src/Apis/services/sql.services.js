@@ -213,6 +213,7 @@ module.exports = {
         prof.name as company_name,
         post.employment_type as type,
         post.job_title as position,
+        post.id as post_id,
         app.status as status
         FROM tbl_applications as app
         JOIN tbl_job_postings as post ON post.id = app.fkid_job_postings

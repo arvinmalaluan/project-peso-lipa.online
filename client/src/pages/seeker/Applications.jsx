@@ -6,10 +6,12 @@ import { SearchNav } from "../../components/common/SearchNav";
 import default_image from "../../assets/images/default_image.png";
 import authenticatedContext from "../../context/authentication/authenticatedContext";
 import { getFetch } from "../../apis/get.api";
+import { DropDown } from "../../components/__application/__components";
 
 const Applications = () => {
   let [shown, setShown] = useState(false);
   const [applications, setApplications] = useState(null);
+  const [actIndex, setActIndex] = useState(false);
 
   const { profile } = useContext(authenticatedContext);
 
@@ -21,6 +23,14 @@ const Applications = () => {
   function onClose() {
     hideSideMenu();
     setShown(false);
+  }
+
+  function showDropdown(index) {
+    if (actIndex === index) {
+      setActIndex((prev) => false);
+    } else {
+      setActIndex((prev) => index);
+    }
   }
 
   useEffect(() => {
@@ -76,7 +86,7 @@ const Applications = () => {
           </div>
 
           <div className="px-4 sm:px-8">
-            <div className="relative my-4 overflow-x-auto border rounded-lg">
+            <div className="relative my-4 border rounded-lg">
               <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -115,7 +125,9 @@ const Applications = () => {
                             >
                               {`#APPL-${value.application_id}`}
                             </th>
-                            <td className="px-6 py-4">{value.date_applied}</td>
+                            <td className="px-6 py-4 truncate">
+                              {value.date_applied}
+                            </td>
                             <td className="px-6 py-4">
                               <div className="flex-shrink-0 block group">
                                 <div className="flex items-center">
@@ -129,7 +141,7 @@ const Applications = () => {
                                     alt="Image Description"
                                   />
                                   <div className="ms-3">
-                                    <h3 className="font-[500] text-sm text-gray-800 dark:text-white">
+                                    <h3 className="truncate font-[500] text-sm text-gray-800 dark:text-white">
                                       {value.company_name}
                                     </h3>
                                     <p className="text-xs font-medium text-gray-400">
@@ -139,14 +151,29 @@ const Applications = () => {
                                 </div>
                               </div>
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 truncate">
                               <div>{value.type}</div>
                             </td>
-                            <td className="px-6 py-4">{value.position}</td>
-                            <td className="px-6 py-4">{value.status}</td>
+                            <td className="px-6 py-4 truncate">
+                              {value.position}
+                            </td>
+                            <td className="px-6 py-4 truncate">
+                              {value.status}
+                            </td>
                             <td className="px-6 py-4">
-                              <button className="size-[18px]">
+                              <button
+                                className="size-[18px] relative"
+                                onClick={() => showDropdown(index)}
+                              >
                                 <svgExports.MoreButton />
+
+                                <div
+                                  className={
+                                    index !== actIndex ? "hidden" : "block"
+                                  }
+                                >
+                                  <DropDown id={value.post_id} />
+                                </div>
                               </button>
                             </td>
                           </tr>
