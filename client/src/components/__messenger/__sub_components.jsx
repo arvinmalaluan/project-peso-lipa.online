@@ -80,7 +80,7 @@ export const ChatFormat = (props) => {
     <div className="flex items-center justify-start gap-2">
       <div>
         <img
-          className="rounded-full w-7 h-7"
+          className="hidden rounded-full w-7 h-7"
           src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
           alt=""
         />
