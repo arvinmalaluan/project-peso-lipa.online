@@ -340,22 +340,22 @@ export const ModalForNewPost = (props) => {
       push(user_posts_ref, user_posts_data)
         .then((snapshot) => {
           console.log("success: user_posts");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
 
-      set(user_ref, user_data)
-        .then((snapshot) => {
-          console.log("success: user");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          set(user_ref, { ...user_data, key: snapshot.key })
+            .then((snapshot) => {
+              console.log("success: user");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
 
-      set(activity_log_ref, activity_log_data)
-        .then((snapshot) => {
-          console.log("success: user");
+          set(activity_log_ref, { ...activity_log_data, key: snapshot.key })
+            .then((snapshot) => {
+              console.log("success: user");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         })
         .catch((error) => {
           console.log(error);

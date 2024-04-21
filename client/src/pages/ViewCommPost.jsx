@@ -115,7 +115,7 @@ const ViewCommunityPost = (props) => {
   };
 
   const goBack = () => {
-    navigate("/community");
+    window.history.back();
   };
 
   const createEngagement = (type) => {

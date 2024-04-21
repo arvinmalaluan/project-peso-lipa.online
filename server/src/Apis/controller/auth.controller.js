@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const bcrypt = require("bcrypt");
 const userAuth = require("../../Helpers/userAuthentication");
 const jwt = require("jsonwebtoken");
 const textFormatter = require("../../Helpers/textFormatter");
@@ -91,6 +91,97 @@ module.exports = {
             }
 
             console.log(results);
+          } catch (error) {
+            console.error("Error occurred during sign in:", error);
+            return res.status(500).json({
+              success: 0,
+              message: "Error occurred during sign in",
+              error: error.message,
+            });
+          }
+        });
+      } catch (error) {
+        return res.status(500).json({
+          success: 0,
+          message: "Error occurred during sign in",
+          error: error.message,
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        success: 0,
+        message: "Error occurred during sign in",
+        error: error.message,
+      });
+    }
+  },
+
+  updateAccount: async (req, res) => {
+    try {
+      const queryVariables = {
+        fields: "id, username, email, password, fkid_role",
+        table_name: "tbl_account",
+        condition: `email = '${req.body.email}';`,
+      };
+
+      try {
+        services.get_w_condition(queryVariables, async (error, results) => {
+          try {
+            errorHandling.check_results(res, error, results);
+
+            if (results.length !== 0) {
+              const response = await userAuth.signin(results, req.body);
+
+              const username = req.body.email;
+              const user = {
+                name: username,
+                role: results[0].fkid_role,
+                id: results[0].id,
+              };
+              const access_token = jwt.sign(
+                user,
+                process.env.ACCESS_TOKEN_SECRET
+              );
+
+              console.log(response);
+
+              if (response.auth !== "valid") {
+                return res.status(200).json({
+                  success: 0,
+                  message: response,
+                });
+              } else {
+                const instance = req.body;
+                instance["password"] = await userAuth.hashing(
+                  req.body.new_password
+                );
+                delete instance["email"];
+                delete instance["new_password"];
+
+                const query_variables = {
+                  values: textFormatter.formatUpdate(
+                    Object.keys(instance),
+                    Object.values(instance)
+                  ),
+                  table_name: "tbl_account",
+                  id: req.params.id,
+                };
+
+                console.log(query_variables);
+
+                services.patch_(query_variables, (error, results) => {
+                  errorHandling.check_results(res, error, results);
+
+                  if (results.length !== 0) {
+                    return res.status(200).json({
+                      success: 1,
+                      message: "Updated Successfully",
+                      results: results,
+                    });
+                  }
+                });
+              }
+            }
           } catch (error) {
             console.error("Error occurred during sign in:", error);
             return res.status(500).json({

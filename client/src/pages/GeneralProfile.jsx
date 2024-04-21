@@ -1,17 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import tinyBlocks from "../utils/tinyBlocks";
 import { hideSideMenu, showSideMenu } from "../utils/functions";
 import { SearchNav } from "../components/common/SearchNav";
 import SideNav from "../components/SideNav";
-import { ProfileFirstGridSystem } from "../components/__profile/__components";
+import {
+  ProfileCommunityPosts,
+  ProfileFirstGridSystem,
+} from "../components/__profile/__components";
 import generalLoginContext from "../context/authentication/generalLoginContext";
 import authenticatedContext from "../context/authentication/authenticatedContext";
 import img from "../assets/images/default_image.png";
+import { get, ref } from "firebase/database";
+import { community_db } from "../utils/firebase.realtime";
+import { useNavigate } from "react-router-dom";
 
 const GeneralProfile = () => {
   let [shown, setShown] = useState(false);
+  const [myPosts, setMyPosts] = useState(null);
   const { authenticator } = useContext(generalLoginContext);
   const { profile } = useContext(authenticatedContext);
+  const navigate = useNavigate();
 
   function onOpen() {
     showSideMenu();
@@ -22,6 +30,33 @@ const GeneralProfile = () => {
     hideSideMenu();
     setShown(false);
   }
+
+  const goToSettings = () => {
+    navigate("/settings");
+  };
+
+  useEffect(() => {
+    if (profile.id) {
+      const db_ref = ref(
+        community_db,
+        `community/user_posts/user_${profile.id}`
+      );
+
+      get(db_ref)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const my_posts_ = [];
+            snapshot.forEach((childSnapshot) => {
+              my_posts_.push(childSnapshot.val());
+            });
+            setMyPosts(my_posts_);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [profile.id]);
 
   return (
     <>
@@ -56,7 +91,10 @@ const GeneralProfile = () => {
                 </p>
               </div>
 
-              <button className="w-full py-2 mt-4 text-sm border rounded sm:mt-0 md:mt-4 sm:px-4 sm:w-auto md:w-full hover:bg-secondary-900 hover:text-white">
+              <button
+                onClick={goToSettings}
+                className="w-full py-2 mt-4 text-sm border rounded sm:mt-0 md:mt-4 sm:px-4 sm:w-auto md:w-full hover:bg-secondary-900 hover:text-white"
+              >
                 Edit Profile
               </button>
 
@@ -105,43 +143,10 @@ const GeneralProfile = () => {
             <p className="mt-8 text-sm font-semibold">Posts in community</p>
 
             <div className="grid grid-cols-1 gap-4 mt-2 sm:grid-cols-2">
-              <div className="p-4 border rounded">
-                <div className="flex items-end justify-between">
-                  <p className="text-sm font-semibold">Hello</p>
-                  <span className="px-2 py-1 text-xs bg-gray-100 border rounded-full">
-                    Public
-                  </span>
-                </div>
-                <p className="mt-2 text-xs">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Aliquid repudiandae dolor quaerat optio reiciendis sint.
-                </p>
-
-                <div className="hidden gap-4 mt-4 xl:flex">
-                  <p className="text-xs">20 views</p>
-                  <p className="text-xs">10 comments</p>
-                  <p className="text-xs">30 engagements</p>
-                </div>
-              </div>
-
-              <div className="p-4 border rounded">
-                <div className="flex items-end justify-between">
-                  <p className="text-sm font-semibold">Hello</p>
-                  <span className="px-2 py-1 text-xs bg-gray-100 border rounded-full">
-                    Public
-                  </span>
-                </div>
-                <p className="mt-2 text-xs">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Aliquid repudiandae dolor quaerat optio reiciendis sint.
-                </p>
-
-                <div className="hidden gap-4 mt-4 xl:flex">
-                  <p className="text-xs">20 views</p>
-                  <p className="text-xs">10 comments</p>
-                  <p className="text-xs">30 engagements</p>
-                </div>
-              </div>
+              {myPosts &&
+                myPosts.map((item, index) => {
+                  return <ProfileCommunityPosts key={index} data={item} />;
+                })}
             </div>
           </div>
         </div>

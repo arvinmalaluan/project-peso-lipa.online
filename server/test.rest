@@ -1,13 +1,11 @@
 ###
-POST http://localhost:3000/api/v1/https/auth/signup
+PATCH  http://localhost:3000/api/v1/https/auth/update/13
 Content-Type: application/json
 
 {
-    "email": "recruiter.email@gmail.com",
-    "username": "recruiter",
+    "email": "malaluanofficial7@gmail.com",
     "password": "default",
-    "recovery_email": "recruiter.recovery@gmail.com",
-    "fkid_role": 2
+    "new_password": "default_new"
 }
 
 ###

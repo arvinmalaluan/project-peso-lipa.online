@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useReducer } from "react";
 import svgExports from "../../assets/svg/exports";
 import { InputWithIcon, InputWithLabel, TextAreaWithLabel, TabLink } from "./__sub_components"; // prettier-ignore
 import authenticatedContext from "../../context/authentication/authenticatedContext";
@@ -218,6 +218,70 @@ export const TabLinks = () => {
         name="Notifications"
         id="notifications"
       />
+    </div>
+  );
+};
+
+export const AccountSettings = () => {
+  const [profile, updateProfile] = useReducer(
+    (prev, next) => {
+      const newEvent = { ...prev, ...next };
+
+      return newEvent;
+    },
+    {
+      username: "",
+      email: "",
+      password: "",
+    }
+  );
+
+  return (
+    <div className="px-0 md:pl-8 md:pr-4">
+      <p className="mb-1 text-sm font-semibold">Account Settings</p>
+      <hr />
+
+      <InputWithLabel
+        label="Username"
+        value={"hello"}
+        name="name"
+        onchange={null}
+      />
+
+      <InputWithLabel
+        label="Email Address"
+        value={"hello"}
+        name="name"
+        onchange={null}
+      />
+
+      <InputWithLabel
+        label="Old Password"
+        value={"hello"}
+        name="name"
+        onchange={null}
+      />
+
+      <InputWithLabel
+        label="New Password"
+        value={"hello"}
+        name="name"
+        onchange={null}
+      />
+
+      <InputWithLabel
+        label="Confirm Password"
+        type="password"
+        value={"hello"}
+        name="name"
+        onchange={null}
+      />
+
+      <div>
+        <button className="px-4 py-2 mt-4 text-xs bg-gray-100 rounded">
+          Save Changes
+        </button>
+      </div>
     </div>
   );
 };

@@ -53,7 +53,10 @@ const SearchJobs = () => {
     const copy = jobPosts;
     let newc;
 
-    if (search.keywords !== null && search.location === null) {
+    if (
+      (search.keywords !== null || search.keywords != "") &&
+      (search.location == "" || search.location == null)
+    ) {
       newc = copy.filter((value, index) => {
         return (
           value.name.toLowerCase().includes(search.keywords.toLowerCase()) ||
@@ -62,7 +65,10 @@ const SearchJobs = () => {
       });
     }
 
-    if (search.keywords === null && search.location !== null) {
+    if (
+      (search.keywords === null || search.keywords == "") &&
+      (search.location != "" || search.location !== null)
+    ) {
       newc = copy.filter((value, index) => {
         return value.location
           .toLowerCase()
@@ -70,7 +76,12 @@ const SearchJobs = () => {
       });
     }
 
-    if (search.keywords !== null && search.location !== null) {
+    if (
+      search.keywords !== null &&
+      search.keywords == "" &&
+      search.location !== null &&
+      search.location == ""
+    ) {
       newc = copy.filter((value, index) => {
         return (
           value.name.toLowerCase().includes(search.keywords.toLowerCase()) ||

@@ -172,7 +172,12 @@ const Applications = () => {
                                     index !== actIndex ? "hidden" : "block"
                                   }
                                 >
-                                  <DropDown id={value.post_id} />
+                                  <DropDown
+                                    id={value.post_id}
+                                    app_id={value.application_id}
+                                    applications={applications}
+                                    setApplications={setApplications}
+                                  />
                                 </div>
                               </button>
                             </td>

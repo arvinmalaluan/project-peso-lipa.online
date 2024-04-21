@@ -59,13 +59,7 @@ const HomePage = () => {
               <p className="mb-2 text-sm font-[500]">Recommended Jobs</p>
 
               <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
-                {job_listings.map((data, index) => {
-                  return (
-                    <div className="border rounded" key={index}>
-                      <Cards data={data} />
-                    </div>
-                  );
-                })}
+                {/* insert the map function here for recommended positions */}
               </div>
             </div>
 

@@ -33,6 +33,7 @@ import { decodeJWT } from "./utils/function";
 import EditPost from "./components/--job-posts/EditPost";
 import ViewJobPost from "./pages/seeker/ViewJobPost";
 import ViewCPost from "./pages/seeker/ViewCPost";
+import SSettings from "./pages/seeker/SSettings";
 
 function App() {
   const { authenticator, updateAuthenticator } =
@@ -72,7 +73,7 @@ function App() {
             <Route path="/community/post/:id" element={<ViewCPost />} />
 
             {/* prettier-ignore */}
-            <Route path="/settings" element={ <GeneralSettingsContextProvider><Settings /></GeneralSettingsContextProvider> } />
+            <Route path="/settings" element={ <GeneralSettingsContextProvider><SSettings /></GeneralSettingsContextProvider> } />
           </Routes>
         </AuthenticatedContextProvider>
       ) : (
