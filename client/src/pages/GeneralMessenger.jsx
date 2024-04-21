@@ -38,11 +38,11 @@ const GeneralMessenger = (props) => {
                   <ConversationWindow />
                 </div>
                 <div className="hidden sm:block">
-                  <ChatListWindow />
+                  <ChatListWindow data={fromFb && fromFb.rooms} />
                 </div>
               </>
             ) : (
-              <ChatListWindow />
+              <ChatListWindow data={fromFb && fromFb.rooms} />
             )}
           </div>
 

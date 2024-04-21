@@ -17,23 +17,28 @@ const Community = () => {
   }
 
   return (
-    <div className="flex w-screen h-screen">
-      <div className="hidden lg:block">
-        <SideNav />
-      </div>
-
-      <div className="absolute z-10 hidden w-screen" id="side-nav-small-screen">
-        <div className="absolute h-screen bg-white">
+    <>
+      <div className="flex w-screen h-screen">
+        <div className="hidden lg:block">
           <SideNav />
         </div>
-        <div
-          className="w-full h-screen bg-darkBackground-100"
-          onClick={onClose}
-        ></div>
-      </div>
 
-      <GeneralCommunity onOpen={onOpen} shown={shown} />
-    </div>
+        <div
+          className="absolute z-10 hidden w-screen"
+          id="side-nav-small-screen"
+        >
+          <div className="absolute h-screen bg-white">
+            <SideNav />
+          </div>
+          <div
+            className="w-full h-screen bg-darkBackground-100"
+            onClick={onClose}
+          ></div>
+        </div>
+
+        <GeneralCommunity onOpen={onOpen} shown={shown} />
+      </div>
+    </>
   );
 };
 

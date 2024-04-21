@@ -19,6 +19,7 @@ const authenticatedContextProvider = ({ children }) => {
       location: "Not set",
       portfolio_link: "Not set",
       gender: "Not set",
+      image: "Not set",
       educational_attainment: "Not set",
       fb_link: "Not set",
       ig_link: "Not set",

@@ -73,6 +73,57 @@ module.exports = {
     }
   },
 
+  get_id: (req, res) => {
+    try {
+      const query_variables = {
+        fields: "*",
+        table_name: "tbl_profile",
+        condition: `id = ${req.params.id}`,
+      };
+
+      services.get_w_condition(query_variables, (error, results) => {
+        errorHandling.check_results(res, error, results);
+
+        if (results.length !== 0) {
+          return res.status(201).json({
+            success: 1,
+            message: "User profile found",
+            results: results,
+          });
+        }
+      });
+    } catch (e) {
+      return res.status(200).json({
+        error: e,
+      });
+    }
+  },
+
+  get_all: (req, res) => {
+    try {
+      const query_variables = {
+        fields: "id, image, name, location",
+        table_name: "tbl_profile",
+      };
+
+      services.get_all(query_variables, (error, results) => {
+        errorHandling.check_results(res, error, results);
+
+        if (results.length !== 0) {
+          return res.status(201).json({
+            success: 1,
+            message: "User profile found",
+            results: results,
+          });
+        }
+      });
+    } catch (e) {
+      return res.status(200).json({
+        error: e,
+      });
+    }
+  },
+
   update: (req, res) => {
     const query_variables = {
       values: textFormatter.formatUpdate(

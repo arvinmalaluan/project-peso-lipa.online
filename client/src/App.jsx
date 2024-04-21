@@ -19,6 +19,7 @@ import NewPost from "./components/--job-posts/NewPost";
 import ApplicantTracking from "./pages/recruiter/ApplicantTracking";
 import CandidateSearch from "./pages/recruiter/CandidateSearch";
 import Messenger from "./pages/seeker/Messenger";
+import RMessenger from "./pages/recruiter/Messenger";
 
 import GeneralSettingsContextProvider from "./context/generalSettingsContextProvider";
 import SeekerHomeContextProvider from "./context/seekerHomeContextProvider";
@@ -31,6 +32,7 @@ import generalLoginContext from "./context/authentication/generalLoginContext";
 import { decodeJWT } from "./utils/function";
 import EditPost from "./components/--job-posts/EditPost";
 import ViewJobPost from "./pages/seeker/ViewJobPost";
+import ViewCPost from "./pages/seeker/ViewCPost";
 
 function App() {
   const { authenticator, updateAuthenticator } =
@@ -67,6 +69,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/messenger" element={<Messenger />} />
             <Route path="/community" element={<Community />} />
+            <Route path="/community/post/:id" element={<ViewCPost />} />
 
             {/* prettier-ignore */}
             <Route path="/settings" element={ <GeneralSettingsContextProvider><Settings /></GeneralSettingsContextProvider> } />
@@ -78,6 +81,7 @@ function App() {
             <Route path="/" element={<R_Home />} />
             <Route path="/recruiter/job-posting" element={<JobPosting />} />
             <Route path="/recruiter/new-post" element={<NewPost />} />
+            <Route path="/recruiter/messenger" element={<RMessenger />} />
             <Route path="/recruiter/edit-post" element={<EditPost />}>
               <Route path=":id/:fk/" element={<EditPost />} />
             </Route>

@@ -6,6 +6,7 @@ import SideNav from "../components/SideNav";
 import { ProfileFirstGridSystem } from "../components/__profile/__components";
 import generalLoginContext from "../context/authentication/generalLoginContext";
 import authenticatedContext from "../context/authentication/authenticatedContext";
+import img from "../assets/images/default_image.png";
 
 const GeneralProfile = () => {
   let [shown, setShown] = useState(false);
@@ -39,16 +40,16 @@ const GeneralProfile = () => {
           <SearchNav onOpen={onOpen} shown={shown} />
 
           <div className="flex flex-col items-start col-span-12 gap-4 px-4 mb-4 sm:px-8 sm:mb-4 md:pl-8 md:pr-0 sm:flex-row md:col-span-3 md:block">
-            <div className="md:w-full md:mx-auto overflow-hidden rounded-full w-[100px]">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-            </div>
+            <img
+              className="md:w-full md:mx-auto overflow-hidden rounded-full w-[100px] aspect-square object-cover object-center"
+              src={profile && profile.image ? profile.image : img}
+            />
 
             <div className="flex flex-col w-full sm:items-start sm:justify-between sm:flex-row md:flex-col">
               <div>
                 <p className="mt-0 text-2xl font-semibold md:mt-4">
                   {profile.name ? profile.name : "Not set"}
                 </p>
-                <p className="text-sm ">Recruiter</p>
 
                 <p className="mt-0 text-sm md:mt-4">
                   {profile.bio ? profile.bio : "Not set"}

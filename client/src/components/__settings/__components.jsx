@@ -4,10 +4,21 @@ import { InputWithIcon, InputWithLabel, TextAreaWithLabel, TabLink } from "./__s
 import authenticatedContext from "../../context/authentication/authenticatedContext";
 import { updateProfileFetch } from "../../apis/patch.api";
 import { createProfileFetch } from "../../apis/post.api";
+import img from "../../assets/images/default_image.png";
 
 export const PublicProfile = () => {
   const { profile, profFound, setProfFound, updateProfile } =
     useContext(authenticatedContext);
+
+  const handleImageProcessing = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        updateProfile({ image: e.target.result });
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  };
 
   function createUserProfile() {
     console.log(profile);
@@ -58,13 +69,24 @@ export const PublicProfile = () => {
                   hidden
                 />
                 <img
-                  className="w-[40%] rounded-full"
-                  src="https://cdn.shopify.com/s/files/1/1140/8354/files/Aang_the_last_airbender_480x480.jpg?v=1661733149"
+                  className="w-[40%] rounded-full aspect-square object-cover object-center"
+                  src={profile && profile.image ? profile.image : img}
                   alt="Rounded avatar"
                 />
-                <button className="absolute bottom-[20px] h-10 p-2 w-10 bg-gray-100 rounded-full ">
+
+                <input
+                  type="file"
+                  hidden
+                  id="input-img"
+                  onChange={handleImageProcessing}
+                />
+
+                <label
+                  htmlFor="input-img"
+                  className="absolute bottom-[20px] h-10 p-2 w-10 bg-gray-100 rounded-full "
+                >
                   <svgExports.CameraIcon />
-                </button>
+                </label>
               </div>
             </div>
 
@@ -151,13 +173,24 @@ export const PublicProfile = () => {
                 hidden
               />
               <img
-                className="w-[75%] rounded-full"
-                src="https://cdn.shopify.com/s/files/1/1140/8354/files/Aang_the_last_airbender_480x480.jpg?v=1661733149"
+                className="w-[75%] aspect-square object-cover rounded-full"
+                src={profile && profile.image ? profile.image : img}
                 alt="Rounded avatar"
               />
-              <button className="absolute bottom-[20px] h-10 p-2 w-10 bg-gray-100 rounded-full ">
+              <input
+                type="file"
+                onChange={handleImageProcessing}
+                accept=".png"
+                hidden
+                id="input-img"
+              />
+
+              <label
+                htmlFor="input-img"
+                className="absolute bottom-[20px] h-10 p-2 w-10 bg-gray-100 rounded-full "
+              >
                 <svgExports.CameraIcon />
-              </button>
+              </label>
             </div>
           </div>
         </div>

@@ -5,10 +5,13 @@ import { hideSideMenu, showSideMenu } from "../utils/functions";
 import { SearchNav } from "../components/common/SearchNav";
 import { PublicProfile, TabLinks } from "../components/__settings/__components";
 import generalSettingsContext from "../context/generalSettingsContext";
+import authenticatedContext from "../context/authentication/authenticatedContext";
+import img from "../assets/images/default_image.png";
 
 const Settings = () => {
   let [shown, setShown] = useState(false);
   const { activeTab } = useContext(generalSettingsContext);
+  const { profile } = useContext(authenticatedContext);
 
   function onOpen() {
     showSideMenu();
@@ -47,20 +50,17 @@ const Settings = () => {
                 : "flex sticky top-[56px] bg-white z-[9] items-center gap-3 px-4 py-2 my-2 sm:px-8"
             }
           >
-            <div className="flex-shrink-0 ">
+            <div className="flex-shrink-0">
               <img
-                className="w-8 h-8 rounded-full"
-                src="https://cdn.shopify.com/s/files/1/1140/8354/files/Aang_the_last_airbender_480x480.jpg?v=1661733149"
+                className="object-cover object-center w-8 h-8 rounded-full aspect-square"
+                src={profile && profile.image ? profile.image : img}
                 alt="Rounded avatar"
               />
             </div>
             <div className="w-full">
-              <p className="text-xs font-normal ">
-                Arvin Malaluan <br className="sm:hidden" />{" "}
-                <span className="text-xs">(arvinmalaluan)</span>
-              </p>
-              <p className="text-sm font-normal hidden sm:block text-[gray]">
-                Your personal account
+              <p className="text-sm font-medium ">
+                {profile && profile.name ? profile.name : "loading ..."}{" "}
+                <br className="sm:hidden" />{" "}
               </p>
             </div>
 

@@ -14,6 +14,18 @@ const firebaseConfig = {
   appId: "1:217221366215:web:dfaa98a9dde751152d59e2",
 };
 
+const firebaseConfigCommunity = {
+  apiKey: "AIzaSyCFtn4hu0r8I4fNPp3zsbHJPd_qDGKSjcs",
+  authDomain: "peso-community.firebaseapp.com",
+  projectId: "peso-community",
+  storageBucket: "peso-community.appspot.com",
+  messagingSenderId: "959877442349",
+  appId: "1:959877442349:web:500050af1b26f85ee201a4",
+};
+
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig, "chat");
+const community_app = initializeApp(firebaseConfigCommunity, "community");
+
 export const db = getDatabase(app);
+export const community_db = getDatabase(community_app);

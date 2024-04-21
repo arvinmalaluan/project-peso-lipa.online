@@ -2,6 +2,7 @@ import React from "react";
 import { SearchNav } from "../components/common/SearchNav";
 import svgExports from "../assets/svg/exports";
 import { PublicProfile, TabLinks } from "../components/__settings/__components";
+import img from "../assets/images/default_image.png";
 
 const GeneralSettings = (props) => {
   return (
@@ -19,7 +20,7 @@ const GeneralSettings = (props) => {
           <div className="flex-shrink-0 ">
             <img
               className="w-8 h-8 rounded-full"
-              src="https://cdn.shopify.com/s/files/1/1140/8354/files/Aang_the_last_airbender_480x480.jpg?v=1661733149"
+              src={profile && profile.img ? profile.img : img}
               alt="Rounded avatar"
             />
           </div>
