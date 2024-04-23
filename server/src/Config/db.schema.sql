@@ -143,6 +143,6 @@ create table tbl_interviews (
     fkid_company int,
     fkid_applicant int,
     primary key(id),
-    foreign key(fkid_company) references tbl_profile(id)
+    foreign key(fkid_company) references tbl_profile(id),
     foreign key(fkid_applicant) references tbl_profile(id)
 );
