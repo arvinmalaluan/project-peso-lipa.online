@@ -27,3 +27,9 @@ export const Modal = ({ children, id }) => {
     </div>
   );
 };
+
+export const DateTimePicker = () => {
+  return <p>hello</p>;
+};
+
+export default DateTimePicker;

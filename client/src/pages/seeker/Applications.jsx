@@ -33,6 +33,8 @@ const Applications = () => {
     }
   }
 
+  console.log(applications);
+
   useEffect(() => {
     if (profile.id) {
       const url_ext = `apply/all/${profile.id}`;
@@ -134,8 +136,8 @@ const Applications = () => {
                                   <img
                                     className="inline-block flex-shrink-0 size-[32px] rounded-full"
                                     src={
-                                      value.company_profile
-                                        ? company_profile
+                                      value && value.company_profile
+                                        ? value.company_profile
                                         : default_image
                                     }
                                     alt="Image Description"

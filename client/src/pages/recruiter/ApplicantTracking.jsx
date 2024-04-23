@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SideNavRecru from "../../components/SideNavRecru";
 import svgExports from "../../assets/svg/exports";
 import { ChevronUpNDown } from "../../assets/svg/recruiterIcons";
 import TableFooter from "../../components/common/table/TableFooter";
 import { dummy_applicants } from "../../assets/dummy/dummy_applicants";
 import DropDown from "../../components/ui-kits/DropDown";
+import authenticatedContext from "../../context/authentication/authenticatedContext";
+import { getMyJobPosts } from "../../apis/get.api";
+import { createFetch } from "../../apis/post.api";
+import DateTimePicker from "../../components/__common/__components";
 
 const THeadWFilter = (props) => {
   return (
@@ -18,6 +22,8 @@ const THeadWFilter = (props) => {
 };
 
 const ApplicantTracking = () => {
+  const { profile } = useContext(authenticatedContext);
+
   function getSelected() {
     const checkboxes = document.querySelectorAll("#tbl-checkboxes");
     const selected_count = document.querySelector("#total-selected");
@@ -57,15 +63,53 @@ const ApplicantTracking = () => {
   const tempData = dummy_applicants;
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(10);
+  const [isOpen, setIsOpen] = useState(false);
+  const [applicants, setApplicants] = useState(null);
+  const [ids, setIds] = useState(null);
+  let [duplicate, setDuplicate] = useState([]);
+  const theads = ["Candidate Name", "Application Date", "Status", "Job Title", "Phone Number"]; // prettier-ignore
 
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = tempData.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(tempData.length / recordsPerPage);
+  const records = applicants && duplicate.slice(firstIndex, lastIndex);
+  const npage = applicants && Math.ceil(duplicate.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
-
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (profile.id) {
+      getMyJobPosts(profile.id)
+        .then((data) => {
+          if (data.success) {
+            const ids = [];
+            for (const obj of data.results) {
+              ids.push(obj.id); // Replace "id" with the actual property name for ID
+            }
+            setIds(ids);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  }, [profile]);
+
+  useEffect(() => {
+    const url_ext = "jobpost/applicants";
+
+    if (ids) {
+      const load = { range: ids.join(", ") };
+
+      createFetch(load, url_ext)
+        .then((data) => {
+          setApplicants((prev) => data.results);
+          setDuplicate((prev) => data.results);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [ids]);
 
   return (
     <div className="flex h-screen w-100">
@@ -147,49 +191,60 @@ const ApplicantTracking = () => {
               </thead>
 
               <tbody id="tbl-body">
-                {records.map((value, index) => {
-                  return (
-                    <tr
-                      key={index}
-                      className={records.length != index + 1 ? "border-b" : ""}
-                    >
-                      <td className="p-4">
-                        <div className="flex items-center h-full ">
-                          <input
-                            type="checkbox"
-                            id="tbl-checkboxes"
-                            onChange={getSelected}
-                          />
-                        </div>
-                      </td>
-                      <td className="p-4 font-medium">
-                        {value.candidate_name}
-                      </td>
-                      <td className="p-4">{value.application_date}</td>
-                      <td className="p-4">{value.status}</td>
-                      <td className="p-4">{value.job_title}</td>
-                      <td className="p-4">{value.phone_number}</td>
-                      <td className="p-4">
-                        <button
-                          className="relative w-4 h-4"
-                          onClick={() => openDrowdown(index)}
-                        >
-                          <svgExports.MoreButton />
-
-                          {activeIndex === index && isOpen && (
-                            <DropDown
-                              isLastIndex={
-                                records.length - 4 > index + 1 ? false : true
-                              }
+                {records &&
+                  records.map((value, index) => {
+                    return (
+                      <tr
+                        key={index}
+                        className={
+                          records.length != index + 1 ? "border-b" : ""
+                        }
+                      >
+                        <td className="p-4">
+                          <div className="flex items-center h-full ">
+                            <input
+                              type="checkbox"
+                              id="tbl-checkboxes"
+                              onChange={getSelected}
                             />
-                          )}
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                          </div>
+                        </td>
+                        <td className="p-4 font-medium">{value.name}</td>
+                        <td className="p-4">{value.created_at}</td>
+                        <td className="p-4">{value.status}</td>
+                        <td className="p-4">{value.job_title}</td>
+                        <td className="p-4">{value.contact_number}</td>
+                        <td className="p-4">
+                          <button
+                            className="relative w-4 h-4"
+                            onClick={() => openDrowdown(index)}
+                          >
+                            <svgExports.MoreButton />
+
+                            {console.log(records.length - 4, index + 1)}
+
+                            {activeIndex === index && isOpen && (
+                              <DropDown
+                                isLastIndex={
+                                  records.length > 5
+                                    ? records.length - 4 > index + 1
+                                      ? false
+                                      : true
+                                    : false
+                                }
+                              />
+                            )}
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
+          </div>
+
+          <div>
+            <DateTimePicker />
           </div>
 
           <TableFooter

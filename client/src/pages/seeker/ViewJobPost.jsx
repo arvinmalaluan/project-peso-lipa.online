@@ -47,6 +47,7 @@ const ViewJobPost = (props) => {
     createFetch(payload, url_ext)
       .then((data) => {
         setApplied(true);
+        console.log(data);
       })
       .catch((error) => console.log(error));
   }
@@ -64,8 +65,12 @@ const ViewJobPost = (props) => {
   useEffect(() => {
     getSpecificJobPosts(id)
       .then((data) => {
+        const results = data.results[0];
+
         setJobPosts((prev) => data.results[0]);
-        data.results[0].application_status !== null && setApplied(true);
+        results.application_status !== null &&
+          results.applicant_id === profile.id &&
+          setApplied(true);
       })
       .catch((error) => console.log(error));
   }, []);

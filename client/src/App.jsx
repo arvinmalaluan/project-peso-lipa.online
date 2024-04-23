@@ -34,6 +34,7 @@ import EditPost from "./components/--job-posts/EditPost";
 import ViewJobPost from "./pages/seeker/ViewJobPost";
 import ViewCPost from "./pages/seeker/ViewCPost";
 import SSettings from "./pages/seeker/SSettings";
+import RCommunity from "./pages/recruiter/RCommunity";
 
 function App() {
   const { authenticator, updateAuthenticator } =
@@ -71,6 +72,7 @@ function App() {
             <Route path="/messenger" element={<Messenger />} />
             <Route path="/community" element={<Community />} />
             <Route path="/community/post/:id" element={<ViewCPost />} />
+            <Route path="/*" element={<HomePage />} />
 
             {/* prettier-ignore */}
             <Route path="/settings" element={ <GeneralSettingsContextProvider><SSettings /></GeneralSettingsContextProvider> } />
@@ -80,29 +82,25 @@ function App() {
         <AuthenticatedContextProvider>
           <Routes>
             <Route path="/" element={<R_Home />} />
-            <Route path="/recruiter/job-posting" element={<JobPosting />} />
-            <Route path="/recruiter/new-post" element={<NewPost />} />
-            <Route path="/recruiter/messenger" element={<RMessenger />} />
-            <Route path="/recruiter/edit-post" element={<EditPost />}>
+            <Route path="/job-posting" element={<JobPosting />} />
+            <Route path="/new-post" element={<NewPost />} />
+            <Route path="/messenger" element={<RMessenger />} />
+            <Route path="/community/post/:id" element={<ViewCPost />} />
+            <Route path="/edit-post" element={<EditPost />}>
               <Route path=":id/:fk/" element={<EditPost />} />
             </Route>
-            <Route path="/recruiter/profile" element={<RProfile />} />
+            <Route path="profile" element={<RProfile />} />
             <Route
-              path="/recruiter/settings"
+              path="settings"
               element={
                 <GeneralSettingsContextProvider>
                   <RSettings />
                 </GeneralSettingsContextProvider>
               }
             />
-            <Route
-              path="/recruiter/applicant-tracking"
-              element={<ApplicantTracking />}
-            />
-            <Route
-              path="/recruiter/candidate-search"
-              element={<CandidateSearch />}
-            />
+            <Route path="applicant-tracking" element={<ApplicantTracking />} />
+            <Route path="candidate-search" element={<CandidateSearch />} />
+            <Route path="/community" element={<RCommunity />} />
           </Routes>
         </AuthenticatedContextProvider>
       )}

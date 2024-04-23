@@ -1,10 +1,12 @@
-import { useContext, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import svgExports from "../../assets/svg/exports";
 import { InputWithIcon, InputWithLabel, TextAreaWithLabel, TabLink } from "./__sub_components"; // prettier-ignore
 import authenticatedContext from "../../context/authentication/authenticatedContext";
-import { updateProfileFetch } from "../../apis/patch.api";
+import { updateFetch, updateProfileFetch } from "../../apis/patch.api";
 import { createProfileFetch } from "../../apis/post.api";
 import img from "../../assets/images/default_image.png";
+import { getFetch } from "../../apis/get.api";
+import generalLoginContext from "../../context/authentication/generalLoginContext";
 
 export const PublicProfile = () => {
   const { profile, profFound, setProfFound, updateProfile } =
@@ -26,7 +28,7 @@ export const PublicProfile = () => {
     createProfileFetch(profile)
       .then((data) => {
         if (data.success) {
-          console.log(data);
+          updateProfile({ id: data.results.insertId });
           setProfFound(true);
         } else {
           console.log(data);
@@ -223,62 +225,115 @@ export const TabLinks = () => {
 };
 
 export const AccountSettings = () => {
-  const [profile, updateProfile] = useReducer(
+  const { authenticator } = useContext(generalLoginContext);
+
+  const [account, updateAccount] = useReducer(
     (prev, next) => {
       const newEvent = { ...prev, ...next };
 
       return newEvent;
     },
     {
-      username: "",
-      email: "",
-      password: "",
+      username: "Not set",
+      email: "Not set",
+      recovery_email: "Not set",
+      password: "••••••••••••",
+      new_password: "••••••••••••",
+      confirm_password: "••••••••••••",
     }
   );
+
+  useEffect(() => {
+    if (authenticator.id) {
+      console.log(authenticator.id);
+
+      const url_ext = `auth/get/${authenticator.id}`;
+      getFetch(url_ext)
+        .then((data) => {
+          const response = data.results[0];
+
+          updateAccount({
+            username: response.username ? response.username : "Not set",
+            email: response.email,
+            recovery_email: response.recovery_email ? response.recovery_email : "Not set", // prettier-ignore
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [authenticator.id]);
+
+  const updateChanges = () => {
+    if (account.new_password == account.confirm_password) {
+      const payload = account;
+      delete payload["confirm_password"];
+
+      const url_ext = `auth/update/${authenticator.id}`;
+      updateFetch(payload, url_ext)
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
   return (
     <div className="px-0 md:pl-8 md:pr-4">
       <p className="mb-1 text-sm font-semibold">Account Settings</p>
       <hr />
 
-      <InputWithLabel
-        label="Username"
-        value={"hello"}
-        name="name"
-        onchange={null}
-      />
+      <div className="mt-4">
+        <InputWithLabel
+          label="Username"
+          value={account.username}
+          name="username"
+          onchange={updateAccount}
+        />
 
-      <InputWithLabel
-        label="Email Address"
-        value={"hello"}
-        name="name"
-        onchange={null}
-      />
+        <InputWithLabel
+          label="Email Address"
+          value={account.email}
+          name="email_address"
+          onchange={updateAccount}
+        />
 
-      <InputWithLabel
-        label="Old Password"
-        value={"hello"}
-        name="name"
-        onchange={null}
-      />
+        <InputWithLabel
+          label="Recovery Email"
+          value={account.recovery_email}
+          name="recovery_email"
+          onchange={updateAccount}
+        />
 
-      <InputWithLabel
-        label="New Password"
-        value={"hello"}
-        name="name"
-        onchange={null}
-      />
+        <InputWithLabel
+          label="password"
+          value={account.password}
+          name="password"
+          onchange={updateAccount}
+        />
 
-      <InputWithLabel
-        label="Confirm Password"
-        type="password"
-        value={"hello"}
-        name="name"
-        onchange={null}
-      />
+        <InputWithLabel
+          label="New Password"
+          value={account.new_password}
+          name="new_password"
+          onchange={updateAccount}
+        />
+
+        <InputWithLabel
+          label="Confirm Password"
+          value={account.confirm_password}
+          name="confirm_password"
+          onchange={updateAccount}
+        />
+      </div>
 
       <div>
-        <button className="px-4 py-2 mt-4 text-xs bg-gray-100 rounded">
+        <button
+          className="px-4 py-2 mt-4 text-xs bg-gray-100 rounded"
+          onClick={updateChanges}
+        >
           Save Changes
         </button>
       </div>

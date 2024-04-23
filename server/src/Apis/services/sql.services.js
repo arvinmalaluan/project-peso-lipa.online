@@ -133,6 +133,7 @@ module.exports = {
                 tbl_job_postings.views,
                 tbl_job_postings.status,
                 tbl_applications.id as application_id,
+                tbl_applications.fkid_profile as applicant_id,
                 tbl_applications.status as application_status
         FROM tbl_profile
         JOIN tbl_job_postings ON tbl_profile.id = tbl_job_postings.fkid_profile
@@ -219,6 +220,46 @@ module.exports = {
         JOIN tbl_job_postings as post ON post.id = app.fkid_job_postings
         JOIN tbl_profile as prof ON prof.id = post.fkid_profile
         WHERE app.fkid_profile = ${query_variables.fk};`,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          return call_back(error);
+        }
+
+        return call_back(null, results);
+      }
+    );
+  },
+
+  get_my_job_posts: (query_variables, call_back) => {
+    db_conn.query(
+      `SELECT DISTINCT jp.id, jp.job_title, jp.status, jp.created_at, jp.application_deadline, jp.fkid_profile as poster_id, COUNT(*) OVER (PARTITION BY jp.id) AS application_count
+      FROM tbl_job_postings as jp
+      JOIN tbl_applications ON tbl_applications.fkid_job_postings = jp.id
+      WHERE ${query_variables.condition};`,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          return call_back(error);
+        }
+
+        return call_back(null, results);
+      }
+    );
+  },
+
+  get_all_applicants: (query_variables, call_back) => {
+    const range = query_variables.range.substring(
+      1,
+      query_variables.range.length - 1
+    );
+
+    db_conn.query(
+      `select app.created_at, app.status, jp.job_title, p.name, p.contact_number
+      from tbl_applications as app
+      join tbl_job_postings as jp on app.fkid_job_postings = jp.id
+      join tbl_profile as p on app.fkid_profile = p.id
+      where fkid_job_postings in (${range});`,
       [],
       (error, results, fields) => {
         if (error) {

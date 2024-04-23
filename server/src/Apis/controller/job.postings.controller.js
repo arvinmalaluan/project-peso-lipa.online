@@ -103,10 +103,10 @@ module.exports = {
     const query_variables = {
       fields: "*",
       table_name: "tbl_job_postings",
-      condition: `fkid_profile = ${req.params.fk}`,
+      condition: `jp.fkid_profile = ${req.params.fk}`,
     };
 
-    services.get_w_condition(query_variables, (error, results) => {
+    services.get_my_job_posts(query_variables, (error, results) => {
       errorHandling.check_results(res, error, results);
 
       if (results.length !== 0) {
@@ -136,6 +136,25 @@ module.exports = {
         return res.status(200).json({
           success: 1,
           message: "Updated Successfully",
+          results: results,
+        });
+      }
+    });
+  },
+
+  // -----> Applicants
+  getAllApplicants: (req, res) => {
+    const query_variables = {
+      range: `'${req.body.range}'`,
+    };
+
+    services.get_all_applicants(query_variables, (error, results) => {
+      errorHandling.check_results(res, error, results);
+
+      if (results.length !== 0) {
+        return res.status(201).json({
+          success: 1,
+          message: "Created Successfully",
           results: results,
         });
       }

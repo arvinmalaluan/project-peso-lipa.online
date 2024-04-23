@@ -1,8 +1,23 @@
 import useLocationHook from "../hooks/useLocationHook";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import commonExports from "./common/commonExports";
+import { useContext } from "react";
+import authenticatedContext from "../context/authentication/authenticatedContext";
+import img from "../assets/images/default_image.png";
+import generalLoginContext from "../context/authentication/generalLoginContext";
 
 const SideNav = () => {
+  const { profile } = useContext(authenticatedContext);
+  const { updateAuthenticator } = useContext(generalLoginContext);
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    updateAuthenticator({ isLoggedIn: false, role: null, id: null });
+    navigate("/");
+  };
+
   return (
     <div
       className="w-[260px] h-full relative flex justify-between flex-col  border-r"
@@ -11,12 +26,14 @@ const SideNav = () => {
       <div>
         <div className="flex items-start gap-2 px-6 py-4 mb-4">
           <img
-            className="w-[40px] h-[40px] rounded-full"
-            src="https://lh3.googleusercontent.com/proxy/ClfUQW-B8zZBe-PqRR6nCpDuIt3Lgyk5qoGXHjWGFmfcAZfTySmDsOmEd1QuBmWBd_QsJ_iFGIdIXucb1-6eHwnVTEtgWM2CoSv2TsPam39iTygj1_pHZAUTc8PQ-UBpK7U"
+            className="w-[40px] h-[40px] rounded-full aspect-square object-cover object-center"
+            src={profile && profile.image ? profile.image : img}
             alt="Rounded avatar"
           />
           <div>
-            <p className="font-semibold text-secondary-900">Arvin Malaluan</p>
+            <p className="font-semibold text-secondary-900">
+              {profile && profile.name ? profile.name : "Unset"}
+            </p>
             <p className="text-xs text-[darkgray]">Set status</p>
           </div>
         </div>
@@ -116,7 +133,7 @@ const SideNav = () => {
       </div>
 
       <div className="p-6">
-        <button>Logout</button>
+        <button onClick={logout}>Logout</button>
       </div>
     </div>
   );

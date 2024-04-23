@@ -60,7 +60,7 @@ const JobPosting = () => {
   }
 
   function newPost() {
-    navigate("/recruiter/new-post");
+    navigate("/new-post");
   }
 
   function showDdown(index) {
@@ -263,7 +263,7 @@ const JobPosting = () => {
                           <td className="p-4">{value.status}</td>
                         )}
                         {tHeads.data[1].checked && (
-                          <td className="p-4">{value.applicants}</td>
+                          <td className="p-4">{value.application_count}</td>
                         )}
                         {tHeads.data[2].checked && (
                           <td className="p-4">{value.created_at}</td>
@@ -282,7 +282,7 @@ const JobPosting = () => {
                               <div className="absolute right-0 z-10 top-5">
                                 <Dropdown
                                   id={value.id}
-                                  fk={value.fkid_profile}
+                                  fk={value.poster_id}
                                   status={value.status}
                                   index={index}
                                   set={setJobPosts}
@@ -299,7 +299,9 @@ const JobPosting = () => {
               ) : (
                 <tbody>
                   <tr>
-                    <td colSpan={7}>No Records Found</td>
+                    <td colSpan={7} className="text-center h-[340px]">
+                      No Records Found
+                    </td>
                   </tr>
                 </tbody>
               )}

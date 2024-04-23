@@ -5,7 +5,7 @@ export const Dropdown = (props) => {
   const navigate = useNavigate();
 
   function editPost(id, fk) {
-    navigate(`/recruiter/edit-post/${id}/${fk}`);
+    navigate(`/edit-post/${id}/${fk}`);
   }
 
   function changeStatus() {

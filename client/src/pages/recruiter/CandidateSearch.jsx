@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 import SideNavRecru from "../../components/SideNavRecru";
 import dp from "../../assets/dp.png";
 import InputWithNoIcon from "../../components/common/input-box/InputWithNoIcon";
@@ -34,6 +34,19 @@ function CandidateCards(props) {
 }
 
 const CandidateSearch = () => {
+  const [search, updateSearch] = useReducer(
+    (prev, next) => {
+      const newEvent = { ...prev, ...next };
+
+      return newEvent;
+    },
+    {
+      location: "",
+      experience: "",
+      availability: "",
+    }
+  );
+
   return (
     <div className="flex w-full h-screen">
       <SideNavRecru />
@@ -97,24 +110,33 @@ const CandidateSearch = () => {
             </div>
             <div className="p-4 pb-8 space-y-4 md:px-5">
               <InputWithNoIcon
+                name="location"
                 label="Location"
                 placeholder="e.g. Batangas City"
                 id="location-filter"
                 isRequired={false}
+                datum={search}
+                onchange={updateSearch}
               />
 
               <InputWithNoIcon
+                name="experience"
                 label="Experience"
                 placeholder="e.g. 2 years in UI/UX Designing"
                 id="experience-filter"
                 isRequired={false}
+                datum={search}
+                onchange={updateSearch}
               />
 
               <InputWithNoIcon
+                name="availability"
                 label="Availability"
                 placeholder="e.g. Unemployed"
                 id="availability-filter"
                 isRequired={false}
+                datum={search}
+                onchange={updateSearch}
               />
             </div>
             <div className="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5 dark:border-gray-600">

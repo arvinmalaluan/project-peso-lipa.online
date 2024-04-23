@@ -56,17 +56,17 @@ const SideNavRecru = () => {
           <MyAList name="Dashboard" path="/" icon={<HomeIcon />} />
           <MyAList
             name="Job Posting"
-            path="/recruiter/job-posting"
+            path="/job-posting"
             icon={<JobPostingIcon />}
           />
           <MyAList
             name="Applicant Tracking"
-            path="/recruiter/applicant-tracking"
+            path="/applicant-tracking"
             icon={<ApplicantTracking />}
           />
           <MyAList
             name="Candidate Search"
-            path="/recruiter/candidate-search"
+            path="/candidate-search"
             icon={<CandidateSearchIcon />}
           />
         </div>
@@ -89,16 +89,8 @@ const SideNavRecru = () => {
         <hr />
 
         <div className="flex flex-col">
-          <MyAList
-            name="Profile"
-            path="/recruiter/profile"
-            icon={<ProfileIcon />}
-          />
-          <MyAList
-            name="Settings"
-            path="/recruiter/settings"
-            icon={<SettingsIcon />}
-          />
+          <MyAList name="Profile" path="/profile" icon={<ProfileIcon />} />
+          <MyAList name="Settings" path="/settings" icon={<SettingsIcon />} />
         </div>
       </div>
     </div>

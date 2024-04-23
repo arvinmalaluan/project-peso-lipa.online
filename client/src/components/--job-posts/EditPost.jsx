@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import authenticatedContext from "../../context/authentication/authenticatedContext";
 import { createJobPostFetch } from "../../apis/post.api";
 import { useParams } from "react-router-dom";
-import { getSpecificJobPosts } from "../../apis/get.api";
+import { getFetch, getSpecificJobPosts } from "../../apis/get.api";
 import { updateFetch } from "../../apis/patch.api";
 
 const EditPost = () => {
@@ -49,10 +49,10 @@ const EditPost = () => {
       .then((data) => {
         if (data.success) {
           alert("success");
-          navigate("/recruiter/job-posting");
+          navigate("/job-posting");
         } else {
           alert("error");
-          navigate("/recruiter/job-posting");
+          navigate("/job-posting");
         }
       })
       .catch((error) => {
@@ -65,11 +65,13 @@ const EditPost = () => {
   const { id, fk } = useParams();
 
   useEffect(() => {
-    getSpecificJobPosts(id)
+    const url = `jobpost/get_id/${id}`;
+    getFetch(url)
       .then((data) => {
-        if (data.success && data.results[0].fkid_profile == fk) {
+        if (data.success && editPost.fkid_profile == fk) {
           updateEditPost(data.results[0]);
         }
+        console.log(editPost.fkid_profile, fk);
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -84,7 +86,7 @@ const EditPost = () => {
         <div className="w-[700px] m-auto">
           <div className="py-4">
             <Link
-              to="/recruiter/job-posting"
+              to="/job-posting"
               className="flex items-center gap-2 mb-4 text-sm text-darkBackground-500 hover:text-secondary-900"
             >
               <div>

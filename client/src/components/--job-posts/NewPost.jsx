@@ -45,10 +45,10 @@ const NewPost = () => {
         .then((data) => {
           if (data.success) {
             alert("success");
-            navigate("/recruiter/job-posting");
+            navigate("/job-posting");
           } else {
             alert("error");
-            navigate("/recruiter/job-posting");
+            navigate("/job-posting");
           }
         })
         .catch((error) => {
@@ -67,7 +67,7 @@ const NewPost = () => {
         <div className="w-[700px] m-auto">
           <div className="py-4">
             <Link
-              to="/recruiter/job-posting"
+              to="/job-posting"
               className="flex items-center gap-2 mb-4 text-sm text-darkBackground-500 hover:text-secondary-900"
             >
               <div>
@@ -89,6 +89,7 @@ const NewPost = () => {
               is_required={true}
               name="job_title"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <Select
@@ -104,6 +105,7 @@ const NewPost = () => {
               is_required={true}
               name="location"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <InputWithNoIcon
@@ -113,6 +115,7 @@ const NewPost = () => {
               is_required={true}
               name="required_experience"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <InputWithNoIcon
@@ -122,6 +125,7 @@ const NewPost = () => {
               is_required={true}
               name="required_education"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <TextArea
@@ -131,6 +135,7 @@ const NewPost = () => {
               rows={10}
               name="job_description"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <InputWithNoIcon
@@ -140,6 +145,7 @@ const NewPost = () => {
               is_required={true}
               name="email_address"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <DatePicker
@@ -158,6 +164,7 @@ const NewPost = () => {
               rows={10}
               name="required_skills"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <TextArea
@@ -167,6 +174,7 @@ const NewPost = () => {
               rows={10}
               name="qualifications"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <TextArea
@@ -176,6 +184,7 @@ const NewPost = () => {
               rows={10}
               name="responsibilities"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <TextArea
@@ -185,6 +194,7 @@ const NewPost = () => {
               rows={10}
               name="benefits"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <InputWithNoIcon
@@ -194,6 +204,7 @@ const NewPost = () => {
               is_required={true}
               name="salary"
               onchange={updateNewPost}
+              datum={newPost}
             />
 
             <div className="flex justify-end gap-4 pt-4 pb-8">
