@@ -13,6 +13,7 @@ import img from "../assets/images/default_image.png";
 import { get, ref } from "firebase/database";
 import { community_db } from "../utils/firebase.realtime";
 import { useNavigate } from "react-router-dom";
+import { getFetch } from "../apis/get.api";
 
 const GeneralProfile = () => {
   let [shown, setShown] = useState(false);
@@ -20,6 +21,7 @@ const GeneralProfile = () => {
   const { authenticator } = useContext(generalLoginContext);
   const { profile } = useContext(authenticatedContext);
   const navigate = useNavigate();
+  const [cards, setCards] = useState(null);
 
   function onOpen() {
     showSideMenu();
@@ -55,6 +57,15 @@ const GeneralProfile = () => {
         .catch((error) => {
           console.log(error);
         });
+    }
+  }, [profile.id]);
+
+  useEffect(() => {
+    const url_ext = `jobpost/get_fk/${profile.id}`;
+    if (profile.id && authenticator.role == 3) {
+      getFetch(url_ext)
+        .then((data) => setCards((prev) => data.results.slice(0, 5)))
+        .catch((error) => console.log(error));
     }
   }, [profile.id]);
 
@@ -137,7 +148,7 @@ const GeneralProfile = () => {
                   : "Jobs Posted"}
               </p>
 
-              <ProfileFirstGridSystem role={authenticator.role} />
+              <ProfileFirstGridSystem role={authenticator.role} data={cards} />
             </div>
 
             <p className="mt-8 text-sm font-semibold">Posts in community</p>

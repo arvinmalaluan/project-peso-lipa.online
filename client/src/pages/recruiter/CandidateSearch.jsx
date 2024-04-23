@@ -1,7 +1,8 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import SideNavRecru from "../../components/SideNavRecru";
-import dp from "../../assets/dp.png";
+import img from "../../assets/images/default_image.png";
 import InputWithNoIcon from "../../components/common/input-box/InputWithNoIcon";
+import { getFetch } from "../../apis/get.api";
 
 function showFilter() {
   const modal = document.getElementById("filter-modal");
@@ -13,17 +14,39 @@ function hideFilter() {
   modal.classList.add("hidden");
 }
 
-function CandidateCards(props) {
+function CandidateCards({ data }) {
+  console.log(data);
+
   return (
     <div className="flex items-center gap-4 ">
-      <img src={dp} alt="" className="h-[130px]" />
+      <img
+        src={data ? (data.image ? data.image : img) : img}
+        alt=""
+        className="h-[130px] aspect-square object-cover object-center"
+      />
 
       <div className="w-full">
-        <p className="mb-2 text-xl font-semibold">Arvin Malaluan</p>
-        <p className="text-sm text-darkBackground-500">UI/UX Designer</p>
-        <p className="text-sm text-darkBackground-500">Batangas City</p>
+        <p className="mb-2 text-xl font-semibold">UI/UX Designer</p>
         <p className="text-sm text-darkBackground-500">
-          Bachelor's Degree in Information Technology
+          {data
+            ? data.name
+              ? data.name
+              : "not record found"
+            : "not record found"}
+        </p>
+        <p className="text-sm text-darkBackground-500">
+          {data
+            ? data.location
+              ? data.location
+              : "not record found"
+            : "not record found"}
+        </p>
+        <p className="text-sm text-darkBackground-500">
+          {data
+            ? data.educational_attainment
+              ? data.educational_attainment
+              : "not record found"
+            : "not record found"}
         </p>
         <p className="mt-2 text-sm cursor-pointer text-darkBackground-500 hover:text-black">
           View Skills
@@ -34,6 +57,8 @@ function CandidateCards(props) {
 }
 
 const CandidateSearch = () => {
+  const [candidates, setCandidates] = useState(null);
+  const [duplicates, setDuplicates] = useState([]);
   const [search, updateSearch] = useReducer(
     (prev, next) => {
       const newEvent = { ...prev, ...next };
@@ -46,6 +71,16 @@ const CandidateSearch = () => {
       availability: "",
     }
   );
+
+  useEffect(() => {
+    const url_ext = "profile/candidates";
+    getFetch(url_ext)
+      .then((data) => {
+        setCandidates((prev) => data.results);
+        setDuplicates((prev) => data.results);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div className="flex w-full h-screen">
@@ -68,12 +103,10 @@ const CandidateSearch = () => {
 
         {/* contents */}
         <div className="grid grid-cols-2 gap-4 px-8 pt-8">
-          <CandidateCards />
-          <CandidateCards />
-          <CandidateCards />
-          <CandidateCards />
-          <CandidateCards />
-          <CandidateCards />
+          {duplicates &&
+            duplicates.map((item, index) => {
+              return <CandidateCards key={index} data={item} />;
+            })}
         </div>
 
         <div className="hidden" id="filter-modal">
@@ -108,6 +141,7 @@ const CandidateSearch = () => {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
+
             <div className="p-4 pb-8 space-y-4 md:px-5">
               <InputWithNoIcon
                 name="location"

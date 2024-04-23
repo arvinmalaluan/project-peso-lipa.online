@@ -3,10 +3,13 @@ import { ChatListWindow, ConversationWindow, MoreInfoWindow } from "../component
 import { SearchNav } from "../components/common/SearchNav";
 import generalMessengerContext from "../context/generalMessengerContext";
 import { db } from "../utils/firebase.realtime";
-import { onValue, ref, set } from "firebase/database";
+import { child, get, onValue, ref, set } from "firebase/database";
+import { getFetch } from "../apis/get.api";
+import authenticatedContext from "../context/authentication/authenticatedContext";
 
 const GeneralMessenger = (props) => {
-  const { activeConvo } = useContext(generalMessengerContext);
+  const { activeConvo, setActiveConvo } = useContext(generalMessengerContext);
+  const { profile } = useContext(authenticatedContext);
   const [fromFb, setFromFb] = useState(null);
 
   useEffect(() => {
@@ -24,6 +27,50 @@ const GeneralMessenger = (props) => {
 
     // Cleanup function to detach the listener on component unmount
     return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    let params = new URL(document.location).searchParams;
+    let id = params.get("id");
+
+    if (id) {
+      const url_ext = `profile/get_id/${id}`;
+
+      getFetch(url_ext)
+        .then((data) => {
+          const results = data.results[0];
+
+          const dbref = ref(db);
+          const div = document.getElementById("search");
+          const route = `rooms_${results.id > profile.id ? results.id : profile.id}_${results.id < profile.id ? results.id : profile.id}`; // prettier-ignore
+          const input = document.getElementById("search-user");
+
+          get(child(dbref, `chats/rooms/${route}`))
+            .then((snapshot) => {
+              if (snapshot.exists()) {
+                const load = results;
+                load["room_exists"] = true;
+                load["route"] = route;
+                setActiveConvo(load);
+
+                div.classList.add("hidden");
+                input.value = "";
+              } else {
+                const load = results;
+                load["room_exists"] = false;
+                load["route"] = route;
+                setActiveConvo(load);
+
+                div.classList.add("hidden");
+                input.value = "";
+              }
+            })
+            .catch((error) => console.log(error));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, []);
 
   return (

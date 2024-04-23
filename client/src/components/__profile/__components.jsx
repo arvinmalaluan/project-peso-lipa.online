@@ -2,7 +2,7 @@ import { CompatibilityCard, JobPostedCard } from "./__sub_components";
 import { sample_compatibility_scores } from "./__dummy_data";
 import { useNavigate } from "react-router-dom";
 
-export const ProfileFirstGridSystem = ({ role }) => {
+export const ProfileFirstGridSystem = ({ role, data }) => {
   return (
     <div
       className={
@@ -11,17 +11,18 @@ export const ProfileFirstGridSystem = ({ role }) => {
           : "grid grid-cols-1 gap-2 py-2 md:grid-cols-2"
       }
     >
-      {sample_compatibility_scores.map((datum, index) => {
-        if (index < 5) {
-          return role === 2 ? (
-            <CompatibilityCard data={datum} key={index} />
-          ) : (
-            <JobPostedCard data={datum} key={index} />
-          );
-        }
-      })}
+      {data &&
+        data.map((datum, index) => {
+          if (index < 5) {
+            return role === 2 ? (
+              <CompatibilityCard data={datum} key={index} />
+            ) : (
+              <JobPostedCard data={datum} key={index} />
+            );
+          }
+        })}
       {sample_compatibility_scores.length > 5 && (
-        <div className="flex items-center justify-center border border-dashed">
+        <div className="flex items-center justify-center border border-dashed min-h-[153px]">
           <p className="py-2 text-sm text-gray-500">See more</p>
         </div>
       )}

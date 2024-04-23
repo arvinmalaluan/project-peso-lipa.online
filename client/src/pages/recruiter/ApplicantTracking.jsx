@@ -8,7 +8,9 @@ import DropDown from "../../components/ui-kits/DropDown";
 import authenticatedContext from "../../context/authentication/authenticatedContext";
 import { getMyJobPosts } from "../../apis/get.api";
 import { createFetch } from "../../apis/post.api";
-import DateTimePicker from "../../components/__common/__components";
+import { DateTimePicker } from "../../components/__common/__components";
+import { FlowbiteModal } from "../../components/__common/FlowbiteModal";
+import { updateFetch } from "../../apis/patch.api";
 
 const THeadWFilter = (props) => {
   return (
@@ -23,6 +25,8 @@ const THeadWFilter = (props) => {
 
 const ApplicantTracking = () => {
   const { profile } = useContext(authenticatedContext);
+  const [openModal, setOpenModal] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   function getSelected() {
     const checkboxes = document.querySelectorAll("#tbl-checkboxes");
@@ -75,6 +79,29 @@ const ApplicantTracking = () => {
   const npage = applicants && Math.ceil(duplicate.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [appId, setAppId] = useState(null);
+  const [index, setIndex] = useState(null);
+
+  function rejectConfirm() {
+    if (appId) {
+      const next_stage = "rejected";
+
+      const payload = { status: next_stage };
+      const url_ext = `apply/${appId}`;
+      const copy = duplicate;
+      copy[index]["status"] = next_stage;
+
+      updateFetch(payload, url_ext)
+        .then((data) => {
+          if (data.success) {
+            setDuplicate(copy);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
 
   useEffect(() => {
     if (profile.id) {
@@ -194,49 +221,65 @@ const ApplicantTracking = () => {
                 {records &&
                   records.map((value, index) => {
                     return (
-                      <tr
-                        key={index}
-                        className={
-                          records.length != index + 1 ? "border-b" : ""
-                        }
-                      >
-                        <td className="p-4">
-                          <div className="flex items-center h-full ">
-                            <input
-                              type="checkbox"
-                              id="tbl-checkboxes"
-                              onChange={getSelected}
-                            />
-                          </div>
-                        </td>
-                        <td className="p-4 font-medium">{value.name}</td>
-                        <td className="p-4">{value.created_at}</td>
-                        <td className="p-4">{value.status}</td>
-                        <td className="p-4">{value.job_title}</td>
-                        <td className="p-4">{value.contact_number}</td>
-                        <td className="p-4">
-                          <button
-                            className="relative w-4 h-4"
-                            onClick={() => openDrowdown(index)}
-                          >
-                            <svgExports.MoreButton />
-
-                            {console.log(records.length - 4, index + 1)}
-
-                            {activeIndex === index && isOpen && (
-                              <DropDown
-                                isLastIndex={
-                                  records.length > 5
-                                    ? records.length - 4 > index + 1
-                                      ? false
-                                      : true
-                                    : false
-                                }
+                      value.status != "rejected" && (
+                        <tr
+                          key={index}
+                          className={
+                            records.length != index + 1 ? "border-b" : ""
+                          }
+                        >
+                          <td className="p-4">
+                            <div className="flex items-center h-full ">
+                              <input
+                                type="checkbox"
+                                id="tbl-checkboxes"
+                                onChange={getSelected}
                               />
-                            )}
-                          </button>
-                        </td>
-                      </tr>
+                            </div>
+                          </td>
+                          <td className="p-4 font-medium">{value.name}</td>
+                          <td className="p-4">{value.created_at}</td>
+                          <td className="p-4">{value.status}</td>
+                          <td className="p-4">{value.job_title}</td>
+                          <td className="p-4">
+                            {value.contact_number
+                              ? value.contact_number
+                              : "Not set"}
+                          </td>
+                          <td className="p-4">
+                            <button
+                              className="relative w-4 h-4"
+                              onClick={() => {
+                                openDrowdown(index);
+                                setIndex(index);
+                                setAppId(value.app_id);
+                              }}
+                            >
+                              <svgExports.MoreButton />
+
+                              {activeIndex === index && isOpen && (
+                                <DropDown
+                                  isLastIndex={
+                                    records.length > 5
+                                      ? records.length - 4 > index + 1
+                                        ? false
+                                        : true
+                                      : false
+                                  }
+                                  setOpenModal={setOpenModal}
+                                  setOpenConfirm={setOpenConfirm}
+                                  id={value.id}
+                                  status={value.status}
+                                  app_id={value.app_id}
+                                  data={duplicate}
+                                  index={index}
+                                  setData={setDuplicate}
+                                />
+                              )}
+                            </button>
+                          </td>
+                        </tr>
+                      )
                     );
                   })}
               </tbody>
@@ -244,7 +287,9 @@ const ApplicantTracking = () => {
           </div>
 
           <div>
-            <DateTimePicker />
+            <DateTimePicker openModal={openModal} setOpenModal={setOpenModal} />
+            {/* prettier-ignore */}
+            <FlowbiteModal openModal={openConfirm} setOpenModal={setOpenConfirm} reject={rejectConfirm} />
           </div>
 
           <TableFooter

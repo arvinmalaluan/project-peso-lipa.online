@@ -5,10 +5,11 @@ import SideNav from "../../components/SideNav";
 import { hideSideMenu, showSideMenu } from "../../utils/functions";
 import { SearchNav } from "../../components/common/SearchNav";
 import { useParams } from "react-router-dom";
-import { getSpecificJobPosts } from "../../apis/get.api";
+import { getFetch, getSpecificJobPosts } from "../../apis/get.api";
 import { createFetch } from "../../apis/post.api";
 import { deleteFetch } from "../../apis/delete.api";
 import authenticatedContext from "../../context/authentication/authenticatedContext";
+import { ChooseResume } from "../../components/__common/__components";
 
 const ViewJobPost = (props) => {
   const [moreInfo, setMoreInfo] = useState(false);
@@ -18,6 +19,8 @@ const ViewJobPost = (props) => {
   let [shown, setShown] = useState(false);
   const [jobPosts, setJobPosts] = useState([]);
   const [applied, setApplied] = useState(false);
+  const [documents, setDocuments] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   function onOpen() {
     showSideMenu();
@@ -37,19 +40,8 @@ const ViewJobPost = (props) => {
     setMoreInfo((prev) => !prev);
   }
 
-  function sendApplication() {
-    const payload = {
-      fkid_profile: profile.id,
-      fkid_job_postings: id,
-    };
-    const url_ext = `apply`;
-
-    createFetch(payload, url_ext)
-      .then((data) => {
-        setApplied(true);
-        console.log(data);
-      })
-      .catch((error) => console.log(error));
+  function chooseResume() {
+    setOpenModal((prev) => true);
   }
 
   function cancelApplication() {
@@ -63,17 +55,35 @@ const ViewJobPost = (props) => {
   }
 
   useEffect(() => {
-    getSpecificJobPosts(id)
-      .then((data) => {
-        const results = data.results[0];
+    if (profile.id) {
+      getSpecificJobPosts(id)
+        .then((data) => {
+          const results = data.results[0];
 
-        setJobPosts((prev) => data.results[0]);
-        results.application_status !== null &&
-          results.applicant_id === profile.id &&
-          setApplied(true);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+          console.log(results.applicant_id, profile.id);
+
+          setJobPosts((prev) => data.results[0]);
+          results.application_status !== null &&
+            results.applicant_id === profile.id &&
+            setApplied(true);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [profile.id]);
+
+  useEffect(() => {
+    if (profile.id) {
+      const url_ext = `documents/my/${profile.id}`;
+
+      getFetch(url_ext)
+        .then((data) => {
+          setDocuments(data.results[0]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [profile.id]);
 
   return (
     <div className="flex w-screen h-screen">
@@ -146,7 +156,7 @@ const ViewJobPost = (props) => {
                       ) : (
                         <button
                           className="px-4 py-2 mt-8 text-sm text-white rounded-full bg-secondary-800 hover:bg-secondary-900"
-                          onClick={sendApplication}
+                          onClick={chooseResume}
                         >
                           Send Application
                         </button>
@@ -168,7 +178,7 @@ const ViewJobPost = (props) => {
                   ) : (
                     <button
                       className="px-4 py-2 mt-8 text-sm text-white rounded-full bg-secondary-800 hover:bg-secondary-900"
-                      onClick={sendApplication}
+                      onClick={chooseResume}
                     >
                       Send Application
                     </button>
@@ -179,6 +189,13 @@ const ViewJobPost = (props) => {
               <div className="hidden col-span-4 pl-12 md:col-span-5 md:block">
                 <CompanyInformationTab company={jobPosts} />
               </div>
+
+              <ChooseResume
+                setOpenModal={setOpenModal}
+                openModal={openModal}
+                data={documents}
+                setApplied={setApplied}
+              />
             </div>
           </div>
         </div>
