@@ -8,9 +8,10 @@ module.exports = {
       const format_values = {
         fkid_job_postings: req.body.fkid_job_postings,
         fkid_profile: req.body.fkid_profile,
+        fkid_resume: req.body.fkid_resume,
       };
 
-      const fields = "fkid_job_postings, fkid_profile";
+      const fields = "fkid_job_postings, fkid_profile, fkid_resume";
 
       const query_variables = {
         fields: fields,

@@ -146,4 +146,20 @@ module.exports = {
       }
     });
   },
+
+  get_candidates: (req, res) => {
+    const query_variables = {};
+
+    services.get_candidates(query_variables, (error, results) => {
+      errorHandling.check_results(res, error, results);
+
+      if (results.length !== 0) {
+        return res.status(200).json({
+          success: 1,
+          message: "Updated Successfully",
+          results: results,
+        });
+      }
+    });
+  },
 };

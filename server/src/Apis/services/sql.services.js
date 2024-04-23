@@ -233,9 +233,9 @@ module.exports = {
 
   get_my_job_posts: (query_variables, call_back) => {
     db_conn.query(
-      `SELECT DISTINCT jp.id, jp.job_title, jp.status, jp.created_at, jp.application_deadline, jp.fkid_profile as poster_id, COUNT(*) OVER (PARTITION BY jp.id) AS application_count
+      `SELECT DISTINCT jp.id, jp.job_title, jp.job_description, jp.status, jp.created_at, jp.application_deadline, jp.fkid_profile as poster_id, COUNT(*) OVER (PARTITION BY jp.id) AS application_count
       FROM tbl_job_postings as jp
-      JOIN tbl_applications ON tbl_applications.fkid_job_postings = jp.id
+      LEFT JOIN tbl_applications ON tbl_applications.fkid_job_postings = jp.id
       WHERE ${query_variables.condition};`,
       [],
       (error, results, fields) => {
@@ -255,11 +255,35 @@ module.exports = {
     );
 
     db_conn.query(
-      `select app.created_at, app.status, jp.job_title, p.name, p.contact_number
+      `select app.created_at, app.status, jp.job_title,
+      p.contact_number,
+      p.id,
+      p.image,
+      p.ln_link,
+      p.location,
+      p.name,
+      app.id as app_id
       from tbl_applications as app
       join tbl_job_postings as jp on app.fkid_job_postings = jp.id
       join tbl_profile as p on app.fkid_profile = p.id
       where fkid_job_postings in (${range});`,
+      [],
+      (error, results, fields) => {
+        if (error) {
+          return call_back(error);
+        }
+
+        return call_back(null, results);
+      }
+    );
+  },
+
+  get_candidates: (query_variables, call_back) => {
+    db_conn.query(
+      `SELECT DISTINCT tbp.*, tbr.tertiary_degree
+      FROM tbl_profile as tbp
+      JOIN tbl_account as tba ON tbp.fkid_account = tba.id
+      JOIN tbl_resume as tbr ON tbr.fkid_profile = tbp.id`,
       [],
       (error, results, fields) => {
         if (error) {
